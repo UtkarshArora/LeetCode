@@ -1,25 +1,39 @@
 class Solution {
 public:
-    int findArea(vector<vector<int>>& grid, int i, int j) {
-        if ((i < 0 || i >= grid.size()) || (j < 0 || j >= grid[0].size()) || grid[i][j] != 1)
-            return 0;
-
-        if (grid[i][j] == 1) {
-            grid[i][j] = 0;
-            return 1 + findArea(grid, i + 1, j) + findArea(grid, i, j + 1) +
-                   findArea(grid, i - 1, j) + findArea(grid, i, j - 1);
-        }
-        return 0;
-    }
     int maxAreaOfIsland(vector<vector<int>>& grid) {
 
+        int area = 0;
         int n = grid.size();
+        int m = grid[0].size();
         int maxArea = 0;
+        int row[] = {-1, 0, 1, 0};
+        int col[] = {0, 1, 0, -1};
+
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < grid[i].size(); j++) {
+            for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 1) {
-                    int area = findArea(grid, i , j);
-                    maxArea = max(maxArea, area);
+                    pair<int, int> p1(i, j);
+                    stack<pair<int, int>> st;
+                    st.push(p1);
+                    int area = 0;
+                    while (!st.empty()) {
+                        pair<int, int> p = st.top();
+                        st.pop();
+                        area++;
+                        maxArea = max(area, maxArea);
+                        int r = p.first, c = p.second;
+                        grid[r][c] = 0;
+                        for (int i = 0; i < 4; i++) {
+                            int nR = r + row[i];
+                            int nC = c + col[i];
+                            if (nR >= 0 && nR < n && nC >= 0 &&
+                                nC < m && grid[nR][nC] == 1) {
+                                pair<int, int> p2(nR, nC);
+                                grid[nR][nC] = 0;
+                                st.push(p2);
+                            }
+                        }
+                    }
                 }
             }
         }
