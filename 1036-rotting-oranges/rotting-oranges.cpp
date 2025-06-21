@@ -52,10 +52,7 @@ public:
                     }
                 }
             }
-            if (added) {
-                    timeElapsed++;
-                    // cout<<"timeElapsed:"<<timeElapsed<<endl;
-                }
+            timeElapsed = (added)? (timeElapsed + 1) : timeElapsed; 
         }
 
         int sum = empty + rotten;
