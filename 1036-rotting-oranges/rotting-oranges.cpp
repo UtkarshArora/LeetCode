@@ -7,6 +7,8 @@ public:
         int col[] = {0, 1, 0, -1};
         vector<vector<bool>> visited(n, vector<bool>(m, false));
         queue<pair<int, int>> q;
+        int empty = 0;
+        int rotten = 0;
 
         int timeElapsed = 0;
         for (int i = 0; i < n; i++) {
@@ -18,12 +20,15 @@ public:
                     visited[i][j] = true;
                     q.push(p1);
                 }
+                if(grid[i][j] == 0)
+                    empty++;
             }
         }
         while (!q.empty()) {
 
             int count = q.size();
             bool added = false;
+            rotten = rotten + count;
 
             while (count > 0) {
 
@@ -60,12 +65,10 @@ public:
                 }
         }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] == 1)
-                    return -1;
-            }
-        }
+        int sum = empty + rotten;
+        if(sum!= (m*n))
+            return -1;
+        
         return timeElapsed;
     }
 };
