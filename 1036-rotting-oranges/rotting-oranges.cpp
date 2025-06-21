@@ -52,7 +52,9 @@ public:
                     }
                 }
             }
-            timeElapsed = (added)? (timeElapsed + 1) : timeElapsed; 
+            if (added) {
+                    timeElapsed++;
+                }
         }
 
         int sum = empty + rotten;
