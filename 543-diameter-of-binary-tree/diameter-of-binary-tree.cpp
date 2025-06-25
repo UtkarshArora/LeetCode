@@ -26,7 +26,7 @@ public:
     hD hDia(TreeNode* root)
     {
         if(root == NULL)
-            return *(new hD(0,0));
+            return (hD(0,0));
         
         hD lhD = hDia(root->left);
         hD rhD = hDia(root->right);
@@ -34,7 +34,7 @@ public:
         int height = 1 + max(lhD.height, rhD.height);
         int diam = max(max(lhD.dia, rhD.dia), (lhD.height + rhD.height));
 
-        hD ans = *(new hD(height, diam));
+        hD ans = hD(height, diam);
         return ans;
         //return 1 + max(height(root->left), height(root->right));
     }
