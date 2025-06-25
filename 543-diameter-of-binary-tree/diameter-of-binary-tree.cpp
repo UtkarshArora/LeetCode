@@ -10,48 +10,46 @@
  * };
  */
 
-class hD{
-    public:
-        int height;
-        int dia;
-    hD(int height, int dia)
-    {
-        this->height = height;
-        this->dia = dia;
-    }
-};
+// class hD{
+//     public:
+//         int height;
+//         int dia;
+//     hD(int height, int dia)
+//     {
+//         this->height = height;
+//         this->dia = dia;
+//     }
+// };
 class Solution {
 public:
 
-    hD hDia(TreeNode* root)
-    {
-        if(root == NULL)
-            return (hD(0,0));
+    // int hDia(TreeNode* root)
+    // {
+    //     if(root == NULL)
+    //         return (hD(0,0));
         
-        hD lhD = hDia(root->left);
-        hD rhD = hDia(root->right);
-
-        int height = 1 + max(lhD.height, rhD.height);
-        int diam = max(max(lhD.dia, rhD.dia), (lhD.height + rhD.height));
-
-        hD ans = hD(height, diam);
-        return ans;
-        //return 1 + max(height(root->left), height(root->right));
-    }
+    //     hD lhD = hDia(root->left);
+    //     hD rhD = hDia(root->right);
+    //     int height = 1 + max(lhD.height, rhD.height);
+    //     int diam = max(max(lhD.dia, rhD.dia), (lhD.height + rhD.height));
+    //     hD ans = hD(height, diam);
+    //     return ans;
+    // }
     int maxDiam(TreeNode* root, int& maxDia)
     {
         if(root == NULL)
             return 0;
-        hD lh = hDia(root->left);
-        hD rh = hDia(root->right);
-        int dia = max((lh.height+rh.height), max(lh.dia, rh.dia));
+        
+        int lh = maxDiam(root->left, maxDia);
+        int rh = maxDiam(root->right, maxDia);
+        int dia = lh + rh ;
+        // int dia = max((lh.height+rh.height), max(lh.dia, rh.dia));
         maxDia = max(dia, maxDia);
-        return maxDia;
+        return 1+max(lh, rh);
     }
-
     int diameterOfBinaryTree(TreeNode* root) {
-       
         int maxDia = 0;
-        return maxDiam(root, maxDia);
+        maxDiam(root, maxDia);
+        return maxDia;
     }
 };
