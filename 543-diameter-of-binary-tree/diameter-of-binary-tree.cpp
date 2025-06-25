@@ -14,11 +14,6 @@ class hD{
     public:
         int height;
         int dia;
-    hD()
-    {
-        height = 0;
-        dia = 0;
-    }
     hD(int height, int dia)
     {
         this->height = height;
