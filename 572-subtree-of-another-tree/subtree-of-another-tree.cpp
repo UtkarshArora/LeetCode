@@ -34,9 +34,11 @@ public:
         bool ans1 = false;
         if(root->val == subRoot->val){
             ans1 = isSameTree(root, subRoot);
+            if(ans1)
+                return true;
         }
         bool ans2 = isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
         
-        return ans1 || ans2;
+        return ans2;
     }
 };
