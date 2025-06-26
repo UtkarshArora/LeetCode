@@ -30,9 +30,16 @@ public:
             return true;
         
         int lH = height(root->left);
+
+        if(lH == -1)
+            return false;
+        
         int rH = height(root->right);
 
-        if(lH == -1 || rH == -1 || abs(lH-rH) > 1)
+        if(rH == -1)
+            return false;
+
+        if(abs(lH-rH) > 1)
             return false;
         
         return true;
