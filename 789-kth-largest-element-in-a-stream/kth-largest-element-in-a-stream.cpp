@@ -9,28 +9,19 @@ public:
         numElements = k;
         for(int num : nums){
 
-            if(pq.size() < k)
-                pq.push(num);
-
-            else if(pq.top() < num)
-            {
+            pq.push(num);
+            if(pq.size() > k)
                 pq.pop();
-                pq.push(num);
-            }
         }
     }
     
     int add(int val) {
         
-        if(pq.size() < numElements)
-        {
-            pq.push(val);
-        }
-        else if(val > pq.top())
-            {
-                pq.pop();
-                pq.push(val);
-            }
+        pq.push(val);
+
+        if(pq.size() > numElements)
+            pq.pop();
+        
         return pq.top();
     }
 };
