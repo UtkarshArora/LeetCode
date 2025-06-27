@@ -7,7 +7,6 @@ public:
         while(start < end)
         {
             mid = start + (end - start)/2;
-            cout<<"start:"<<start<<",end:"<<end<<", mid:"<<mid<<endl;
             if(nums[start] > nums[mid])
             {
                 end = mid;
