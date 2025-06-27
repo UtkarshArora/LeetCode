@@ -6,11 +6,8 @@ public:
 
         for (char ch : s) {
 
-            cout << "ch:c" << ch << endl;
-
             if (ch == '(' || ch == '{' || ch == '[') {
                 st.push(ch);
-                //cout << "pushed in the stack, ch:" << ch << endl;
             } else {
                 if (st.empty())
                     return false;
