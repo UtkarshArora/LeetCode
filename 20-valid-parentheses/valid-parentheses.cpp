@@ -10,7 +10,7 @@ public:
 
             if (ch == '(' || ch == '{' || ch == '[') {
                 st.push(ch);
-                cout << "pushed in the stack, ch:" << ch << endl;
+                //cout << "pushed in the stack, ch:" << ch << endl;
             } else {
                 if (st.empty())
                     return false;
