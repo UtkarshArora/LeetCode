@@ -17,14 +17,10 @@ public:
         if(root == NULL)
             return 0;
         
-        int count = 0;
-        if(root->val >= highest){
-            count++;
-            highest = max(root->val, highest);
-        }
+        int count = (root->val >= highest)? 1 : 0;
         
-        count += goodNodesHelper(root->left, highest);
-        count += goodNodesHelper(root->right, highest);
+        count += goodNodesHelper(root->left, max(root->val, highest));
+        count += goodNodesHelper(root->right, max(root->val, highest));
 
         return count;
     }
