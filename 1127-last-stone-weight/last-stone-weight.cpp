@@ -4,12 +4,8 @@ public:
    
 
     int lastStoneWeight(vector<int>& stones) {
-
-        if(stones.size() < 2)
-            return stones[0];
         
         priority_queue<int>pq(stones.begin(), stones.end());
-
         while(pq.size() >= 2)
         {
             int y = pq.top(); pq.pop();
