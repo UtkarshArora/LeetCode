@@ -1,56 +1,47 @@
+class Node{
+    
+    public:
+        int val, min;
+        Node* next;
+    Node(int val, int min, Node* next)
+    {   
+        this->val = val;
+        this->min = min;
+        this->next = next;
+    }
+};
+
+
 class MinStack {
 public:
 
-    list<int>l;
-    list<int>minVals;
+    Node* head;
 
     MinStack() {
+        head = NULL;
     }
     
     void push(int val) {
-
-        l.push_front(val);
-        bool inserted = false;
-        if(minVals.empty() || val <= minVals.front())
+        if(head == NULL)
         {
-            minVals.push_front(val);
+            head = new Node(val, val, NULL);
         }
         else
         {
-            for(auto it = minVals.begin() ; it!=minVals.end() ;)
-            {
-                if(val >= *it)
-                    it++;
-                else{
-                    minVals.insert(it, val);
-                    inserted = true;
-                    break;
-                }
-            }
-            if(!inserted)
-                minVals.push_back(val);       
+            head = new Node(val, min(head->min, val), head);
         }
     }
     
     void pop() {
-
-        int val = l.front();
-        l.pop_front();
-        for(auto it = minVals.begin() ; it!=minVals.end() ; it++)
-        {
-            if(*it == val){
-                minVals.erase(it);
-                break;
-            }
-        }
+        head = head->next;
     }
     
     int top() {
-        return l.front();
+        return head->val;
     }
     
     int getMin() {
-        return minVals.front();
+        return head->min;
     }
 };
 
