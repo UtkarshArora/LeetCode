@@ -6,11 +6,10 @@ public:
         vector<int>numDep(numCourses);
         queue<int>q;
 
-        for(vector<int>&v : prerequisites)
+        for(auto &p : prerequisites)
         {
-            int x = v[0], y = v[1];
-            numDep[x]++;
-            adjList[y].push_back(x);
+            numDep[p[0]]++;
+            adjList[p[1]].push_back(p[0]);
         }
         for(int i = 0 ; i < numCourses; i++)
         {
@@ -20,20 +19,21 @@ public:
         if(q.empty())
             return false;
         
-        int count = q.size();
+        //int count = q.size();
         while(!q.empty())
         {
             int course = q.front(); q.pop();
+            numCourses--;
             for(int num : adjList[course])
             {
-                numDep[num]--;
-                if(numDep[num] == 0)
+                //numDep[num]--;
+                if(--numDep[num] == 0)
                 {
                     q.push(num);
-                    count++;
+                    //count++;
                 }
             }
         }
-        return count == numCourses;
+        return numCourses == 0;
     }
 };
