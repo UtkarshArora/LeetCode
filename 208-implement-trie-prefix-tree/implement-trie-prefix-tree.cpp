@@ -43,7 +43,7 @@ public:
     bool startsWith(string prefix) {
         int index = prefix[0] - 'a';
         vector<string>v1 = prefixes[index];
-        for(string s : v1)
+        for(string& s : v1)
         {
             bool ans = compareStrings(s,prefix);
             if(ans)
