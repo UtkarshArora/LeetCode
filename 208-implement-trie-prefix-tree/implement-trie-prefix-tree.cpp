@@ -1,7 +1,5 @@
 class Trie {
-
 private:
-
     bool compareStrings(string s1, string prefix)
     {
         if(s1.size() < prefix.size())
@@ -17,10 +15,10 @@ private:
         }
         return (index == prefix.size());
     }
-public:
 
+public:
     vector<vector<string>>prefixes;
-    unordered_set<string>words;
+    //unordered_set<string>words;
     Trie() {
         prefixes.resize(26);
     }
@@ -28,11 +26,18 @@ public:
     void insert(string word) {
         int index = word[0] - 'a';
         prefixes[index].push_back(word);
-        words.insert(word);
+        // words.insert(word);
     }
     
     bool search(string word) {
-        return words.count(word);
+        
+        int index = word[0] - 'a';
+        for(string& s1 : prefixes[index])
+        {
+            if(s1 == word)
+                return true;
+        }
+        return false;
     }
     
     bool startsWith(string prefix) {
