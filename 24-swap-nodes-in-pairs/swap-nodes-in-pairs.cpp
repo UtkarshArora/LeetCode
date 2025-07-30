@@ -15,17 +15,14 @@ public:
         if(!head || !head->next)
             return head;
         
-        ListNode* newhead = NULL;
+        ListNode* newhead = head->next;
         ListNode* curr = head;
         ListNode* prev = NULL;
         while(curr && curr->next)
         {
             ListNode* next1 = curr->next;
-            curr->next = NULL;
             curr->next = next1->next;
             next1->next = curr;
-            if(newhead == NULL)
-                newhead = next1;
             if(prev != NULL)
                 prev->next = next1;
             prev = curr;
