@@ -12,10 +12,7 @@ class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
 
-        if (!head || !head->next)
-            return head;
-
-        ListNode* dummy = new ListNode(0);
+        ListNode* dummy = new ListNode(0,head);
         ListNode* prev = dummy;
         ListNode* curr = head;
 
