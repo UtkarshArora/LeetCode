@@ -18,9 +18,6 @@ public:
             if(numDep[i] == 0)
                 q.push(i);
         }
-        if(q.empty())
-            return false;
-
         int count = q.size();
         while(!q.empty())
         {
