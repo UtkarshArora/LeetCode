@@ -2,38 +2,39 @@ class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         
-        vector<vector<int>>adjList(numCourses);
-        vector<int>numDep(numCourses);
         queue<int>q;
+        vector<int>numDep(numCourses);
 
-        for(auto &p : prerequisites)
+        vector<vector<int>>adjM(numCourses);
+        for(auto v1 : prerequisites)
         {
-            numDep[p[0]]++;
-            adjList[p[1]].push_back(p[0]);
+            int second = v1[1];
+            int first = v1[0];
+            adjM[second].push_back(first);
+            numDep[first]++;
         }
-        for(int i = 0 ; i < numCourses; i++)
+        for(int i = 0; i < numCourses; i++)
         {
             if(numDep[i] == 0)
                 q.push(i);
         }
         if(q.empty())
             return false;
-        
-        //int count = q.size();
+
+        int count = q.size();
         while(!q.empty())
         {
-            int course = q.front(); q.pop();
-            numCourses--;
-            for(int num : adjList[course])
+            int num = q.front();
+            q.pop();
+            for(int n : adjM[num])
             {
-                //numDep[num]--;
-                if(--numDep[num] == 0)
-                {
-                    q.push(num);
-                    //count++;
+                numDep[n]--;
+                if(numDep[n] == 0){
+                    q.push(n);
+                    count++;
                 }
             }
         }
-        return numCourses == 0;
+        return count == numCourses;
     }
 };
