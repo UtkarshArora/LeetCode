@@ -20,8 +20,8 @@ public:
         if(root->left == NULL && root->right == NULL)
         {
             int num = root->val;
-            countNum[num] = countNum[num] + 1;
-            count1 = count1 + (countNum[num]%2 == 1) - (countNum[num]%2 == 0);
+            countNum[num] = (countNum[num] + 1) % 2;
+            count1 = count1 + (countNum[num] == 1) - (countNum[num] == 0);
             if(count1 <= 1)
                 finalAns+=1;
             return;
