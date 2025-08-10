@@ -13,7 +13,7 @@ public:
         vector<int>ans;
         while(total < count && ele_count > 0)
         {
-            while(num < ele_count)
+            while(num < ele_count && total<count)
             {
                 int i = index / n_cols;
                 int j = index % n_cols;
@@ -21,13 +21,13 @@ public:
                 index++; num++;
                 total++;
             }
-            if(total == count)
-                break;
+            // if(total == count)
+            //     break;
             diff++;
             ele_count = n_rows - diff;
             num = 0;
             index--;
-            while(num < ele_count)
+            while(num < ele_count && total<count)
             {
                 index = index + n_cols;
                 int i = index / n_cols;
@@ -36,11 +36,11 @@ public:
                 num++;
                 total++;
             }
-            if(total == count)
-                break;
+            // if(total == count)
+            //     break;
             num = 0;
             ele_count = n_cols - diff;
-            while(num < ele_count)
+            while(num < ele_count && total<count)
             {
                 index--;
                 int i = index / n_cols;
@@ -49,12 +49,12 @@ public:
                 num++;
                 total++;
             }
-            if(total == ele_count)
-                break;
+            // if(total == ele_count)
+            //     break;
             diff++;
             num = 0;
             ele_count = n_rows - diff;
-            while(num < ele_count)
+            while(num < ele_count && total<count)
             {
                 index = index - n_cols;
                 int i = index / n_cols;
@@ -63,8 +63,8 @@ public:
                 num++;
                 total++;
             }
-            if(total == ele_count)
-                break;
+            // if(total == ele_count)
+            //     break;
             num = 0;
             ele_count = n_cols - diff;
             index++;
