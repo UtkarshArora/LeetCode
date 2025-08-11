@@ -7,7 +7,7 @@ public:
         while (i < n) {
             int x = i;
             while (j >= 0) {
-                cout<< i << j << endl;
+                //cout<< i << j << endl;
                 int curr_ele = arr[i][j];
                 int next_i = i+1, next_j = j+1;
                 while(next_i < n && next_j < m)
