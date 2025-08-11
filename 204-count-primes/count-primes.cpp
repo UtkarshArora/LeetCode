@@ -7,6 +7,8 @@ public:
         int count = 0;
         for(int i = 2 ; i <=maxCount ; i++)
         {   
+            if(primeNums[i] == 0)
+                continue;
             for(int j = 2 ; (i*j)<=n ; j++)
             {
                 int num = i*j;
