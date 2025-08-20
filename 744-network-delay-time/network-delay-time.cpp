@@ -24,8 +24,6 @@ public:
                 continue;
             set1.insert(curr);
             currTime = time;
-
-            cout<<"currTime: "<<currTime<<", curr:"<<curr<<endl;
             for(int i = 1; i <= n ; i++)
             {
                 int val = adjM[curr][i];
