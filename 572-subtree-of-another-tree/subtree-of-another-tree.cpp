@@ -31,7 +31,7 @@ public:
         bool ans =
             isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
 
-        ans = ans || checkIdentical(root, subRoot);
+        ans = ans || (root->val == subRoot->val) && checkIdentical(root, subRoot);
         return ans;
     }
 };
