@@ -6,39 +6,37 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
 public:
-    bool isSameTree(TreeNode* root, TreeNode* root1) {
-        if (root == NULL && root1 == NULL)
+
+    bool checkIdentical(TreeNode* root, TreeNode* subRoot)
+    {
+        if (!root && !subRoot)
             return true;
 
-        if (root == NULL || root1 == NULL)
+        if (!root || !subRoot)
             return false;
 
-        return (root->val == root1->val) &&
-               isSameTree(root->left, root1->left) &&
-               isSameTree(root->right, root1->right);
+        return root->val == subRoot->val && checkIdentical(root->left, subRoot->left) && checkIdentical(root->right, subRoot->right);
     }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
 
-        if(root == NULL && subRoot == NULL)
+        if (!root && !subRoot)
             return true;
-        
-        if(root == NULL)
+
+        if (!root || !subRoot)
             return false;
-        
-        bool ans1 = false;
-        if(root->val == subRoot->val){
-            ans1 = isSameTree(root, subRoot);
-            if(ans1)
-                return true;
+
+        bool ans = false;
+        ans = ans || isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+  
+        if(root->val == subRoot->val)
+        {
+            ans = ans || checkIdentical(root, subRoot);
         }
-        bool ans2 = isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
-        
-        return ans2;
+        return ans;
     }
 };
