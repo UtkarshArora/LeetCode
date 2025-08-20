@@ -28,10 +28,9 @@ public:
         if (root == NULL)
             return false;
 
-        bool ans =
-            isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
+        bool ans = (root->val == subRoot->val && checkIdentical(root, subRoot));
 
-        ans = ans || (root->val == subRoot->val && checkIdentical(root, subRoot));
+        ans = ans || isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
         return ans;
     }
 };
