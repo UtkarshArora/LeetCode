@@ -7,15 +7,15 @@ public:
 
         while (start <= end) {
 
-            while (start < len && !isalnum(s[start]))
+           if(!isalnum(s[start])){
                 start++;
+                continue;
+           }
 
-            while (end >= 0 && !isalnum(s[end]))
+            if(!isalnum(s[end])){
                 end--;
-
-            if (start == len || end < 0)
-                return true;
-            
+                continue;
+            }            
             //cout<<s[start]<<" "<<s[end]<<endl;
             if (tolower(s[start]) == tolower(s[end])) {
                 start++;
