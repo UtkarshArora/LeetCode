@@ -19,7 +19,6 @@ public:
         Node* tail = head;
 
         while(curr) {
-            cout<<curr->val<<endl;
             if (curr->child!=NULL){
                 if(curr->next!=NULL)
                     levels.push(curr->next);
@@ -43,7 +42,7 @@ public:
                 tail->next = curr;
                 curr->prev = tail;
                 tail = curr;
-                curr->child = NULL;
+                tail->child = NULL;
             }
         }
         return newhead;
