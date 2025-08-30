@@ -34,7 +34,6 @@ public:
                 tail->child = NULL;
                 tail = tail->next;
             } else {
-                //cout<<"tail:"<<tail->val<<endl;
                 if(levels.empty())
                     return newhead;
                 curr = levels.top();
