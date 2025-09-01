@@ -1,79 +1,73 @@
 class TrieNode{
-
+    
     public:
-        vector<TrieNode*> next;
-        bool is_word;
-        TrieNode()
+
+    TrieNode* links[26];
+    bool isEnd;
+    TrieNode()
+    {
+        for(int i = 0 ; i < 26 ; i++)
         {
-            next.assign(26, NULL);
-            this->is_word = false;
+            links[i] = NULL;
         }
+        isEnd = false;
+    }
+    void insertChar(int index)
+    {
+        this->links[index] = new TrieNode();
+    }
+    bool checkChar(int index)
+    {
+        return (this->links[index]!=NULL);
+    }
 };
 
 class Trie {
 public:
-    vector<TrieNode*>words;
+
+    TrieNode* root;
     Trie() {
-        words.assign(26, NULL);
+        root = new TrieNode();
     }
     
     void insert(string word) {
-
-        int index = word[0] - 'a';
-        TrieNode* node = NULL;
-        if(words[index] == NULL)
-        {
-            node = new TrieNode();
-            words[index] = node;
-        }
-        else
-            node = words[index];
         
-        for(int i = 1 ; i < word.size() ; i++)
+        TrieNode* node = root;
+        for(char ch : word)
         {
-            int index = word[i] - 'a';
-
-            if(node->next[index] == NULL){
-                node->next[index] = new TrieNode();
+            int index = ch - 'a';
+            if(!node->checkChar(index))
+            {
+                node->insertChar(index);
             }
-            node = node->next[index];
+            node = node->links[index];
         }
-        node->is_word = true;
+        node->isEnd = true;
     }
     
     bool search(string word) {
-        
-        int index = word[0] - 'a';
 
-        if(words[index] == NULL)
-            return false;
-        
-        TrieNode* node = words[index];
-        
-        for(int i = 1 ; i < word.size() ; i++)
+        TrieNode* node = root;
+
+        for(char ch : word)
         {
-            int index = word[i] - 'a';
-            if(node->next[index] == NULL)
+            int index = ch - 'a';
+            if(!node->checkChar(index))
                 return false;
-            else
-                node = node->next[index];
+            node = node->links[index];
         }
-        return node->is_word;
+        return node->isEnd;
     }
     
     bool startsWith(string prefix) {
-        
-        int index = prefix[0] - 'a';
-        if(words[index] == NULL)
-            return false;
-        TrieNode* node = words[index];
-        
-        for(int i = 1; i < prefix.size() ; i++)
+
+        TrieNode* node = root;
+        for(char ch : prefix)
         {
-            int index = prefix[i] - 'a';
-            node = node->next[index];
-            if(node == NULL)
+            int index = ch - 'a';
+            if(!node->checkChar(index))
                 return false;
+            node = node->links[index];
         }
         return true;
     }
