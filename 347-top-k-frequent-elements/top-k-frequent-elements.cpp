@@ -1,9 +1,9 @@
-struct compare{
-    bool operator()(pair<int,int>&p1, pair<int,int>&p2)
-    {
-        return p1.first < p2.first;
-    }
-};
+// struct compare{
+//     bool operator()(pair<int,int>&p1, pair<int,int>&p2)
+//     {
+//         return p1.first < p2.first;
+//     }
+// };
 
 class Solution {
 public:
@@ -15,7 +15,7 @@ public:
         {
             map1[num]++;
         }
-        priority_queue<pair<int,int>, vector<pair<int,int>>, compare>pq;
+        priority_queue<pair<int,int>, vector<pair<int,int>>>pq;
         for(int num : nums)
         {
             if(map1.find(num)!=map1.end())
