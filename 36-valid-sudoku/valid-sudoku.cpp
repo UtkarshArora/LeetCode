@@ -1,66 +1,68 @@
 class Solution {
 public:
-
-    bool check3X3(vector<vector<char>>& board)
+    bool checkRow(vector<char>&row)
     {
-        int n = board.size();
-        for(int i = 0 ; i < n ; i = i + 3)
+        vector<int>countArr(10);
+        for(int j = 0 ; j < 9; j++)
         {
-            for(int j = 0; j < n ; j = j + 3)
-            {
-                int x = i;
-                int y = j;
-                vector<bool>visited(10, false);
-                while(x < (i + 3))
-                {
-                    y = j;
-                    while(y < (j + 3))
-                    {
-                        int num = board[x][y] - '0';
-                        y++;
-                        if(num <= 0)
-                            continue;
-                        //cout<<num<<endl;
-                        if(visited[num] == true)
-                            return false;
-                        visited[num] = true;
-                    }
-                    x++;
-                }
+            int index = row[j] - '0';
+            if(index>=1 && index<=9){
+                countArr[index]++;
+            if(countArr[index]>1)
+                return false;
             }
+            else
+                continue;
+        }
+        return true;
+    }
+    bool checkCol(vector<vector<char>>&board, int j)
+    {
+        vector<int>countArr(10);
+        for(int i = 0 ; i < 9; i++)
+        {
+            int index = board[i][j] - '0';
+            if(index>=1 && index<=9){
+                countArr[index]++;
+            if(countArr[index]>1)
+                return false;
+            }
+            else
+                continue;
         }
         return true;
     }
     bool isValidSudoku(vector<vector<char>>& board) {
         
-        int n = board.size();
-        if(!check3X3(board))
-            return false;
-        
-        for(int i = 0 ; i < n ; i++)
+        for(int i = 0 ; i < 9 ; i++)
         {
-            vector<bool>visited(10, false);
-            for(int j = 0 ; j < n ; j++)
-            {
-                if(board[i][j]== '.')
-                    continue;
-                int num = board[i][j] - '0';
-                if(visited[num] == true)
-                    return false;
-                visited[num] = true;
-            }
+            if(!checkRow(board[i]))
+                return false;
         }
-        for(int j = 0 ; j < n ; j++)
+        for(int j = 0 ; j < 9 ; j++)
         {
-            vector<bool>visited(10, false);
-            for(int i = 0 ; i < n ; i++)
+            if(!checkCol(board, j))
+                return false;
+        }
+        for(int i = 0 ; i < 9 ; i=i+3)
+        {
+            for(int j = 0 ; j < 9 ; j = j + 3)
             {
-                if(board[i][j]== '.')
-                    continue;
-                int num = board[i][j] - '0';
-                if(visited[num] == true)
-                    return false;
-                visited[num] = true;
+            vector<int>countArr(10,0);
+            for(int k = i ; k < i+3 ; k++)
+            {
+                for(int l = j ; l < j+3 ; l++)
+                {
+                    int index = board[k][l] - '0';
+                    if(index>=1 && index<=9){
+                        countArr[index]++;
+                    if(countArr[index]>1)
+                        return false;
+                    }
+                    else
+                        continue;
+                }
+             }
             }
         }
         return true;
