@@ -12,20 +12,28 @@
 class Solution {
 public:
 
-    bool isValidBST(TreeNode* root, long long int minVal, long long int maxVal)
+    bool isValidBST(TreeNode* root, double minVal, double maxVal)
     {
         if(root == NULL)
             return true;
         
-        if(root->val <= minVal || root->val >= maxVal)
-            return false;
+        if(root->val > minVal && root->val < maxVal)
+            return isValidBST(root->left, minVal, root->val) && isValidBST(root->right, root->val, maxVal);
         
-        bool ans1 = isValidBST(root->left, minVal, root->val);
-        bool ans2 = isValidBST(root->right, root->val, maxVal);
-
-        return ans1 && ans2;
+        return false;
     }
     bool isValidBST(TreeNode* root) {
-        return isValidBST(root, LLONG_MIN, LLONG_MAX);
+        if(root == NULL)
+            return true;
+        double minD = std::numeric_limits<double>::lowest();
+        double maxD = std::numeric_limits<double>::max();
+        bool ans1 = isValidBST(root->left, minD, root->val);
+        bool ans2 = isValidBST(root->right, root->val, maxD);
+        bool ans = ans1 && ans2;
+        if(root && root->left)
+            ans = ans & root->val > root->left->val;
+        if(root && root->right)
+            ans = ans & root->val < root->right->val;
+        return ans;
     }
 };
