@@ -1,20 +1,21 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
-        vector<int>charCount(26,0);
-        for(char ch : s)
+
+        if(s.size()!=t.size())
+            return false;
+        
+        vector<int>countL(26);
+        for(int i = 0 ; i < s.size() ; i++)
         {
-            int index = ch - 'a';
-            charCount[index]++;
-        }
-        for(char ch : t)
-        {
-            int index = ch - 'a';
-            charCount[index]--;
+            char ch = s[i];
+            char ch1 = t[i];
+            countL[ch-'a']++;
+            countL[ch1-'a']--;
         }
         for(int i = 0 ; i < 26 ; i++)
         {
-            if(charCount[i]!=0)
+            if(countL[i]!=0)
                 return false;
         }
         return true;
