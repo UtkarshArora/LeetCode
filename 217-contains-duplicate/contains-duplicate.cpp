@@ -4,10 +4,9 @@ public:
         unordered_set<int>set1;
         for(int num : nums)
         {
-            if(set1.count(num))
+            if(set1.contains(num))
                 return true;
-            else
-                set1.insert(num);
+            set1.insert(num);
         }
         return false;
     }
