@@ -1,1 +1,1 @@
-<h2>search-a-2d-matrix Notes</h2><hr>[ Time taken: 43 m 46 s ]
+<h2>search-a-2d-matrix Notes</h2><hr>[ Time taken: 15 m 53 s ]
