@@ -24,9 +24,9 @@ public:
             return true;
         
         bool ibL = isBalanced(root->left);
-        bool ibR = isBalanced(root->right);
         int lh = height(root->left);
         int rh = height(root->right);
+        bool ibR = isBalanced(root->right);
         return ibL && ibR && abs(lh - rh)<= 1;
     }
 };
