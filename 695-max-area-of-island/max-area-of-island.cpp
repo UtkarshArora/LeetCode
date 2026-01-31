@@ -1,39 +1,42 @@
 class Solution {
 public:
     int maxAreaOfIsland(vector<vector<int>>& grid) {
-
-        int area = 0;
-        int n = grid.size();
-        int m = grid[0].size();
-        int maxArea = 0;
-        int row[] = {-1, 0, 1, 0};
-        int col[] = {0, 1, 0, -1};
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] == 1) {
-                    pair<int, int> p1(i, j);
-                    stack<pair<int, int>> st;
-                    st.push(p1);
+        
+        vector<vector<int>>dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+        int area = 0, maxArea = 0;
+        queue<pair<int,int>>q;
+        int n = grid.size(), m = grid[0].size();
+        for(int i = 0 ; i < n ; i++)
+        {
+            for(int j = 0 ; j < m ; j++)
+            {
+                if(grid[i][j] == 1)
+                {
+                    q.push({i,j});
                     int area = 0;
-                    while (!st.empty()) {
-                        pair<int, int> p = st.top();
-                        st.pop();
+                    while(!q.empty())
+                    {
+                        pair<int,int>p1 = q.front();
+                        q.pop();
+                        int x = p1.first, y = p1.second;
+                        grid[x][y] = 0;
                         area++;
-                        maxArea = max(area, maxArea);
-                        int r = p.first, c = p.second;
-                        grid[r][c] = 0;
-                        for (int i = 0; i < 4; i++) {
-                            int nR = r + row[i];
-                            int nC = c + col[i];
-                            if (nR >= 0 && nR < n && nC >= 0 &&
-                                nC < m && grid[nR][nC] == 1) {
-                                pair<int, int> p2(nR, nC);
-                                grid[nR][nC] = 0;
-                                st.push(p2);
+                        for(int i = 0 ; i < 4 ; i++)
+                        {
+                            int x_new = x + dirs[i][0];
+                            int y_new = y + dirs[i][1];
+                            if(x_new < 0 || x_new >= n)
+                                continue;
+                            if(y_new < 0 || y_new >= m)
+                                continue;
+                            if(grid[x_new][y_new] == 1)
+                            {
+                                q.push({x_new, y_new});
+                                grid[x_new][y_new] = 0;
                             }
                         }
                     }
+                    maxArea = max(area, maxArea);
                 }
             }
         }
