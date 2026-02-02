@@ -21,27 +21,42 @@ public:
 
 class Solution {
 public:
-    Node* DFS(Node* node, unordered_map<Node*, Node*>& cloned)
-    {   
-        //Node* newNode = new Node(node);
-        cloned[node] = new Node(node->val);
-
-        for(Node* curr : node->neighbors)
-        {
-            if(cloned.find(curr) == cloned.end())
-            {
-                cloned[curr]= DFS(curr, cloned);
-            }
-            cloned[node]->neighbors.push_back(cloned[curr]);
-        }
-        return cloned[node];
-    }   
     Node* cloneGraph(Node* node) {
         
-        if(!node)
-            return NULL;
-        
-        unordered_map<Node*, Node*> cloned;
-        return DFS(node, cloned);
+        queue<Node*>q;
+        if(node == NULL)
+            return node;
+        q.push(node);
+        Node* mainNode = NULL;
+        unordered_map<Node*, Node*>nodeMappings;
+        while(!q.empty())
+        {
+            Node* temp = q.front();
+            q.pop();
+            Node* node1 = NULL;
+            if(nodeMappings.find(temp)!=nodeMappings.end())
+                node1 = nodeMappings[temp];
+            else{
+                node1 = new Node(temp->val);
+                nodeMappings[temp] = node1;
+            }
+
+            if(mainNode == NULL)
+                mainNode = node1;
+            
+            for(auto n : temp->neighbors)
+            {
+                if(nodeMappings[n]){
+                    node1->neighbors.push_back(nodeMappings[n]);
+                    continue;
+                }
+                else{
+                    q.push(n);
+                    nodeMappings[n] = new Node(n->val);
+                    node1->neighbors.push_back(nodeMappings[n]);
+                }
+            }
+        }
+        return mainNode;
     }
 };
