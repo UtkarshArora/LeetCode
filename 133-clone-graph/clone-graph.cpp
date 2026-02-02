@@ -24,11 +24,10 @@ public:
     Node* cloneGraph(Node* node) {
         
         queue<Node*>q;
+        unordered_map<Node*, Node*>nodeMappings;
         if(node == NULL)
             return node;
         q.push(node);
-        Node* mainNode = NULL;
-        unordered_map<Node*, Node*>nodeMappings;
         while(!q.empty())
         {
             Node* temp = q.front();
@@ -40,10 +39,6 @@ public:
                 node1 = new Node(temp->val);
                 nodeMappings[temp] = node1;
             }
-
-            if(mainNode == NULL)
-                mainNode = node1;
-            
             for(auto n : temp->neighbors)
             {
                 if(!nodeMappings[n]){
@@ -53,6 +48,6 @@ public:
                 node1->neighbors.push_back(nodeMappings[n]);
             }
         }
-        return mainNode;
+        return nodeMappings[node];
     }
 };
