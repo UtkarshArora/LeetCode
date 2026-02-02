@@ -46,15 +46,11 @@ public:
             
             for(auto n : temp->neighbors)
             {
-                if(nodeMappings[n]){
-                    node1->neighbors.push_back(nodeMappings[n]);
-                    continue;
-                }
-                else{
+                if(!nodeMappings[n]){
                     q.push(n);
                     nodeMappings[n] = new Node(n->val);
-                    node1->neighbors.push_back(nodeMappings[n]);
                 }
+                node1->neighbors.push_back(nodeMappings[n]);
             }
         }
         return mainNode;
