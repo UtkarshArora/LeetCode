@@ -10,7 +10,7 @@ public:
             prod*=nums[i];
         }
         prod = 1;
-        vector<int>output(n,1);
+        // vector<int>output(n,1);
         for(int i = 0 ; i < n ; i++)
         {
             int val = nums[i];
