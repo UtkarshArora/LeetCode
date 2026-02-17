@@ -13,9 +13,10 @@ public:
         vector<int>output(n,1);
         for(int i = 0 ; i < n ; i++)
         {
-            output[i] = prod * suffix[i];
-            prod*= nums[i];
+            int val = nums[i];
+            nums[i] = prod * suffix[i];
+            prod*= val;
         }
-        return output;
+        return nums;
     }
 };
