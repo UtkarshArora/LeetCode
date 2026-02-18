@@ -2,11 +2,7 @@ class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
         
-        if(nums.size() == 0)
-        {
-            return 0;
-        }
-        int longestConsecutive = 1;
+        int longestConsecutive = 0;
         unordered_set<int>set1;
         for(int num : nums)
         {
@@ -14,11 +10,11 @@ public:
         }
         for(int num : nums)
         {
-            int currentNumber = num;
-            int currentConsecutive = 1;
-            if(set1.find(currentNumber-1) == set1.end())
+            if(set1.find(num-1) == set1.end())
             {
-                while(set1.find(currentNumber+1)!=set1.end())
+                int currentNumber = num;
+                int currentConsecutive = 1;
+                while(set1.count(currentNumber+1))
                 {
                     currentConsecutive++;
                     currentNumber++;
