@@ -5,21 +5,25 @@ public:
         if(nums.empty())
             return 0;
         sort(nums.begin(), nums.end());
+        int res = 1;
         int count = 1;
-        int maxCount = count;
-        for(int i = 1 ; i < nums.size() ; i++)
+        int prev = nums[0];
+        int n = nums.size();
+        for(int i = 1 ; i < n ; i++)
         {
-            if(nums[i]==nums[i-1]+1)
+            if(nums[i] == (prev+1))
             {
                 count++;
-            //cout<<count<<" "<<nums[i-1]<<" "<<nums[i]<<endl;
-                maxCount = max(count, maxCount);
+                prev = nums[i];
             }
-            else if(nums[i] == nums[i-1])
+            else if(nums[i] == prev)
                 continue;
-            else
-                count = 1;
+            else{
+                res = max(res, count);
+                count=1;
+                prev = nums[i];
+            }
         }
-        return maxCount;
+        return max(count,res);
     }
 };
