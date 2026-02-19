@@ -12,20 +12,22 @@
 class Solution {
 public:
 
-    int goodNodesHelper(TreeNode* root, int highest)
+    int goodNodes(TreeNode* root, int maxVal)
     {
         if(root == NULL)
             return 0;
-        
-        int count = (root->val >= highest)? 1 : 0;
-        
-        count += goodNodesHelper(root->left, max(root->val, highest));
-        count += goodNodesHelper(root->right, max(root->val, highest));
-
-        return count;
+        int sum = 0;
+        if(root->val >= maxVal)
+            sum = 1;
+        maxVal = max(maxVal, root->val);
+        return sum + goodNodes(root->left, maxVal) + goodNodes(root->right, maxVal);
     }
+
     int goodNodes(TreeNode* root) {
-    
-        return goodNodesHelper(root, INT_MIN);
+
+        if(root == NULL)
+            return 0;
+        int maxVal = root->val;
+        return 1+ goodNodes(root->left, maxVal) + goodNodes(root->right, maxVal);
     }
 };
