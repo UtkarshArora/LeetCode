@@ -1,36 +1,37 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
+        
+        int n = nums.size();
         sort(nums.begin(), nums.end());
         vector<vector<int>>ans;
-        int n = nums.size();
-        for (int i = 0; i < n - 2; i++) {
-
-            if (i > 0 && nums[i] == nums[i - 1]){
+        unordered_set<string>set1;
+        for(int i = 0 ; i < n-2 ; i++)
+        {
+            if(i > 0 && nums[i] == nums[i-1])
                 continue;
-            }
-            int target = -nums[i];
-            int start = i + 1, end = n - 1;
-            while (start < end) {
-                int sum = nums[start] + nums[end];
-                if (sum == target) {
-                    vector<int> v1 = {nums[i], nums[start], nums[end]};
-                    ans.push_back(v1);
+            int sum = nums[i];
+            int start = i+1, end = n-1;
+            while(start < end)
+            {
+                int sum2 = nums[start] + nums[end];
+                if(sum2 + sum == 0)
+                {
+                    string s1 = to_string(nums[i]) + "#" + to_string(nums[start]) + "#"+ to_string(nums[end]);
+                    if(!set1.count(s1)){
+                        set1.insert(s1);
+                        vector<int>v1 = {nums[i], nums[start], nums[end]};
+                        ans.push_back(v1);
+                    }
                     start++;
                     end--;
-                    while (start < n && nums[start - 1] == nums[start]) {
-                        start++;
-                    }
-                    while (end >=0 && nums[end+1] == nums[end]) {
-                        end--;
-                    }
-                    // cout<<"start: "<<start<<endl;
-                    // cout<<"end: "<<end<<endl;
                 }
-                if (sum > target){
+                else if(sum2 + sum > 0)
+                {
                     end--;
-                }
-                else if (sum < target){
+                }   
+                else
+                {
                     start++;
                 }
             }
