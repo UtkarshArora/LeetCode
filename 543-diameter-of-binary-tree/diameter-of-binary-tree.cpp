@@ -9,47 +9,22 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-
-// class hD{
-//     public:
-//         int height;
-//         int dia;
-//     hD(int height, int dia)
-//     {
-//         this->height = height;
-//         this->dia = dia;
-//     }
-// };
 class Solution {
 public:
 
-    // int hDia(TreeNode* root)
-    // {
-    //     if(root == NULL)
-    //         return (hD(0,0));
-        
-    //     hD lhD = hDia(root->left);
-    //     hD rhD = hDia(root->right);
-    //     int height = 1 + max(lhD.height, rhD.height);
-    //     int diam = max(max(lhD.dia, rhD.dia), (lhD.height + rhD.height));
-    //     hD ans = hD(height, diam);
-    //     return ans;
-    // }
-    int maxDiam(TreeNode* root, int& maxDia)
+    int height(TreeNode* root)
     {
         if(root == NULL)
             return 0;
-        
-        int lh = maxDiam(root->left, maxDia);
-        int rh = maxDiam(root->right, maxDia);
-        int dia = lh + rh ;
-        // int dia = max((lh.height+rh.height), max(lh.dia, rh.dia));
-        maxDia = max(dia, maxDia);
-        return 1+max(lh, rh);
+        return 1+max(height(root->left), height(root->right));
     }
     int diameterOfBinaryTree(TreeNode* root) {
-        int maxDia = 0;
-        maxDiam(root, maxDia);
-        return maxDia;
+       //return max(lh, rh) for all nodes for the tree
+        if(root == NULL)
+            return 0;
+        int maxL = diameterOfBinaryTree(root->left);
+        int ht = height(root->left) + height(root->right);
+        int maxR = diameterOfBinaryTree(root->right);
+        return max(ht, max(maxL,maxR));
     }
 };
