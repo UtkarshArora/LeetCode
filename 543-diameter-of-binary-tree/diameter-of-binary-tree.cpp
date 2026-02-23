@@ -12,19 +12,18 @@
 class Solution {
 public:
 
-    int height(TreeNode* root)
+    int height(TreeNode* root, int &d)
     {
         if(root == NULL)
             return 0;
-        return 1+max(height(root->left), height(root->right));
+        int lh = height(root->left,  d);
+        int rh = height(root->right, d);
+        d = max(d, lh+rh);
+        return 1+max(lh, rh);
     }
-    int diameterOfBinaryTree(TreeNode* root) {
-       //return max(lh, rh) for all nodes for the tree
-        if(root == NULL)
-            return 0;
-        int maxL = diameterOfBinaryTree(root->left);
-        int ht = height(root->left) + height(root->right);
-        int maxR = diameterOfBinaryTree(root->right);
-        return max(ht, max(maxL,maxR));
+    int diameterOfBinaryTree(TreeNode* root) {   
+        int d = 0;
+        height(root, d);
+        return d;
     }
 };
