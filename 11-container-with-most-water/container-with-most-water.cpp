@@ -8,7 +8,7 @@ public:
     {
         int prod = (right-left)*min(height[right], height[left]);
         res = max(res, prod);
-        if(height[left] <= height[right])
+        if(height[left] < height[right])
             left++;
         else
             right--;
