@@ -26,11 +26,7 @@ public:
         
         if(root == NULL)
             return true;
-        int lh = height(root->left);
-        int rh = height(root->right);
-        int diff = abs(lh-rh);
-        if(lh == -1 || rh == -1 || diff > 1)
-            return false;
-        return true;
+        int ht = height(root);
+        return ht!= -1;
     }
 };
