@@ -12,25 +12,39 @@
  */
 class Solution {
 public:
-    bool checkIdentical(TreeNode* root, TreeNode* subRoot) {
+
+    //(3,3) => (4,3) => (1,3) => 
+
+    bool isSubTreeHelper(TreeNode* root, TreeNode* subRoot)
+    {
         if (!root && !subRoot)
             return true;
 
-        if (!root || !subRoot)
+        if (!root && subRoot || root && !subRoot)
+            return false;
+        
+        if(root->val!=subRoot->val)
             return false;
 
-        return root->val == subRoot->val &&
-               checkIdentical(root->left, subRoot->left) &&
-               checkIdentical(root->right, subRoot->right);
+        return isSubTreeHelper(root->left, subRoot->left) && isSubTreeHelper(root->right, subRoot->right);
     }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
 
-        if (root == NULL)
+        if (!root && !subRoot)
+            return true;
+
+        if (!root && subRoot || root && !subRoot)
             return false;
 
-        bool ans = (root->val == subRoot->val && checkIdentical(root, subRoot));
-
-        ans = ans || isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
-        return ans;
+        bool left = isSubtree(root->left, subRoot);
+        bool right = isSubtree(root->right, subRoot);
+        if (left || right){
+            return true;
+        }
+        if (root->val == subRoot->val) {
+            return isSubTreeHelper(root->left, subRoot->left) &&
+                   isSubTreeHelper(root->right, subRoot->right);
+        }
+        return false;
     }
 };
