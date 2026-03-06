@@ -24,7 +24,6 @@ public:
         {
             vector<int>v1;
             int count = q.size();
-            cout<<count<<endl;
             while(count)
             {
                 TreeNode* node = q.front();
