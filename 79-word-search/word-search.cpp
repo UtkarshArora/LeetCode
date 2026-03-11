@@ -3,23 +3,13 @@ public:
 
 bool DFS(vector<vector<char>>& board, string word, vector<vector<bool>>&visited, int x, int y, int index)
     {
-        if(index == word.size()){
+        if(x < 0 || y < 0 || x == board.size() || y == board[0].size() || visited[x][y] || word[index]!= board[x][y]){
+            return false;
+        }
+        if(index == word.size()-1){
             return true;
         }
-        if(x < 0 || y < 0 || x == board.size() || y == board[0].size() || visited[x][y]){
-            //cout<<x<<" "<<y<<" "<<index<<endl;
-            return false;
-        }
-        if(word[index]!= board[x][y])
-        {
-            return false;
-        }
         visited[x][y] = true;
-        // if(index == word.size()-1){
-        //     cout<<x<<" "<<y<<" "<<index<<" "<<true<<endl;
-        //     return true;
-        // }
-        //cout<<x<<" "<<y<<" "<<index<<endl;
         bool ans = DFS(board, word, visited, x+1, y, index+1) || DFS(board, word, visited, x-1, y, index+1) || DFS(board, word, visited, x, y-1, index+1) || DFS(board, word, visited, x, y+1, index+1);
 
         if(ans)
