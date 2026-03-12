@@ -1,47 +1,36 @@
-class Node{
-    
-    public:
-        int val, min;
-        Node* next;
-    Node(int val, int min, Node* next)
-    {   
-        this->val = val;
-        this->min = min;
-        this->next = next;
-    }
-};
-
-
 class MinStack {
 public:
-
-    Node* head;
-
+        list<int>l1;
+        unordered_set<int>set1;
+        list<int>l2;
+        int minVal;
     MinStack() {
-        head = NULL;
+        minVal = INT_MAX;
     }
     
     void push(int val) {
-        if(head == NULL)
-        {
-            head = new Node(val, val, NULL);
-        }
+        l1.push_front(val);
+        set1.insert(val);
+        if(l2.empty() || val <= l2.front())
+            l2.push_front(val);
         else
-        {
-            head = new Node(val, min(head->min, val), head);
-        }
+            l2.push_back(val);
     }
     
     void pop() {
-        head = head->next;
+        int val = l1.front();
+        l1.pop_front();
+        set1.erase(val);
+        auto it = find(l2.begin(), l2.end(), val);
+        l2.erase(it);
     }
     
     int top() {
-        return head->val;
+        return l1.front();
     }
     
     int getMin() {
-        return head->min;
+        return l2.front();
     }
 };
 
