@@ -1,15 +1,32 @@
 class Solution {
 public:
-    int minCost(int n) {
+
+    int minCostOp(int n, vector<int>&v1)
+    {
         if(n == 1)
             return 0;
-        
+
+        if(v1[n]){
+            return v1[n];
+        }
         if(n%2 == 0){
             int mult = n/2;
             int prod = mult * mult;
-            return prod + minCost(n/2) + minCost(n/2);
+            v1[n] = prod + minCost(n/2) + minCost(n/2);
         }
-        int prod = n/2 * (n/2+1);
-        return prod + minCost(n/2) + minCost(n/2+1);
+        else
+        {
+            int prod = n/2 * (n/2+1);
+            v1[n] = prod + minCost(n/2) + minCost(n/2+1);
+        }
+        return v1[n];
+    }
+    int minCost(int n) {
+        if(n == 1)
+            return 0;
+
+        vector<int>v1(n+1,0);
+        int ans = minCostOp(n, v1);
+        return ans;
     }
 };
