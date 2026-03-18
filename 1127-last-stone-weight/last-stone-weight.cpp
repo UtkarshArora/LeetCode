@@ -3,19 +3,15 @@ public:
     int lastStoneWeight(vector<int>& stones) {
 
         priority_queue<int>pq(stones.begin(), stones.end());
-        
-        while(pq.size()>=2)
+        while(pq.size() > 1)
         {
-            int stone1 = pq.top();
-            pq.pop();
-            int stone2 = pq.top();
-            pq.pop();
-            if(stone1!=stone2)
+            int num1 = pq.top(); pq.pop();
+            int num2 = pq.top(); pq.pop();
+            if(num1 != num2)
             {
-                int diff = stone1 - stone2;
-                pq.push(diff);
+                pq.push(num1-num2);
             }
         }
-        return (pq.empty())? 0 : pq.top();
+        return pq.empty()? 0 : pq.top();
     }
 };
