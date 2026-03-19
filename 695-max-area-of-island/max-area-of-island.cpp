@@ -17,7 +17,6 @@ public:
             for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 1) {
                     int ans = DFS(grid, i, j);
-                    cout<<"i:"<<i<<",j:"<<j<<",ans:"<<ans<<endl;
                     res = max(res, ans);
                 }
             }
