@@ -21,32 +21,34 @@ public:
 
 class Solution {
 public:
-    Node* cloneGraph(Node* node) {
 
-        if(!node)
-            return node;
-        unordered_map<Node*, Node*>clones;
-        queue<Node*>q;
-        q.push(node);
-        while(!q.empty())
+    Node* clone(Node* node, unordered_map<Node*, Node*>& clones)
+    {
+        Node* newNode = new Node(node->val);
+        clones[node] = newNode;
+        for(auto ne : node->neighbors)
         {
-            Node* node1 = q.front();
-            q.pop();
-            Node* newNode = NULL;
-            if(!clones.count(node1)){
-                newNode = new Node(node1->val);
-                clones[node1] = newNode;
-            }
-            newNode = clones[node1];
-            for(auto node : node1->neighbors)
+            if(clones.find(ne)!=clones.end())
             {
-                if(!clones.count(node)){
-                    clones[node] = new Node(node->val);
-                    q.push(node);
-                }
-                newNode->neighbors.push_back(clones[node]);
+                newNode->neighbors.push_back(clones[ne]);
+            }
+            else
+            {
+                newNode->neighbors.push_back(clone(ne, clones));
             }
         }
-        return clones[node];
+        return newNode;
+    }
+    Node* cloneGraph(Node* node) {
+        if(!node)
+        {
+            return NULL;
+        }
+        else if(node->neighbors.size() == 0)
+        {
+            return new Node(node->val);
+        }
+        unordered_map<Node*, Node*>clones;
+        return clone(node, clones);
     }
 };
