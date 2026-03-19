@@ -4,51 +4,49 @@ public:
 
         int n = grid.size();
         int m = grid[0].size();
-        int countFreshOranges = 0;
-        vector<pair<int,int>> dirs = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
-        queue<pair<int, int>> q;
-        int countZeros = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (grid[i][j] == 2) {
-                    q.push(make_pair(i, j));
+        vector<pair<int,int>>dirs = {{-1,0},{1,0},{0,1},{0,-1}};
+        queue<pair<int,int>>q;
+        int num_fresh = 0;
+
+        for(int i = 0 ; i < n ; i++)
+        {
+            for(int j = 0 ; j < m; j++)
+            {
+                if(grid[i][j] == 2)
+                {
+                    pair<int,int>p = make_pair(i,j);
+                    q.push(p);
                 }
-                if (grid[i][j] == 1) {
-                    countFreshOranges++;
+                else if(grid[i][j] == 1)
+                {
+                    num_fresh++;
                 }
             }
         }
-        if (n == 0 || countFreshOranges == 0)
-            return 0;
-
-        if (q.empty())
-            return -1;
-
-        int minutes = -1;
-
-        while (!q.empty()) {
-
-            int q_size = q.size();
-
-            for (int i = 0; i < q_size; i++) {
-                auto [x, y] = q.front();
-                q.pop();
-                for (auto [dx, dy] : dirs) {
-                    int x_new = x + dx;
-                    int y_new = y + dy;
-                    if (x_new >= 0 && x_new < n && y_new >= 0 && y_new < m &&
-                        grid[x_new][y_new] == 1) {
-                        q.push(make_pair(x_new, y_new));
-                        grid[x_new][y_new] = 2;
-                        countFreshOranges--;
+        int mins = 0;
+        while(!q.empty())
+        {
+            int num_rotten = q.size();
+            int count = 0;
+            mins = mins + (int)(num_fresh > 0);
+            while(count < num_rotten)
+            {
+                pair<int,int>p1 = q.front(); q.pop();
+                for(int i = 0 ; i < 4 ; i++)
+                {
+                    auto [x,y] = dirs[i];
+                    int x1 = p1.first + x;
+                    int y1 = p1.second + y;
+                    if(x1>=0 && x1<n && y1>=0 && y1<m && grid[x1][y1] == 1)
+                    {
+                        q.push({x1, y1});
+                        grid[x1][y1] = 2;
+                        num_fresh--;
                     }
                 }
+                count++;
             }
-            minutes++;
         }
-        if (countFreshOranges == 0) {
-            return minutes;
-        }
-        return -1;
+        return (num_fresh == 0)? mins : -1;
     }
 };
