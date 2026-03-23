@@ -29,13 +29,7 @@ public:
                 }
             }
         }
-        int minTime = 0;
-        for(int i = 1 ; i <=n ; i++)
-        {
-            if(timings[i] == INT_MAX)
-                return -1;
-            minTime = max(minTime, timings[i]);
-        }
-        return minTime;
+        int ans = *max_element(timings.begin()+1,timings.end());
+        return ans!=INT_MAX? ans : -1;
     }
 };
