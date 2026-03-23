@@ -2,12 +2,6 @@ class Solution {
 public:
 int networkDelayTime(vector<vector<int>>& times, int n, int k) {
 
-        vector<vector<pair<int,int>>>adjList(n+1);
-        for(vector<int>&v1 :  times)
-        {
-            int index = v1[0];
-            adjList[index].push_back({v1[1],v1[2]});
-        }
 
         vector<int>timings(n+1, INT_MAX);
         timings[k] = 0;
@@ -16,21 +10,17 @@ int networkDelayTime(vector<vector<int>>& times, int n, int k) {
         {
             count = 0;
             bool changed = false;
-            for(int j = k ; count < n+1 ; j++)
+            for(vector<int>&v1 : times)
             {
-                int index = j%(n+1);
-                for(auto [dest,w] : adjList[index])
+                int x = v1[0], y = v1[1], w = v1[2];
+                if(timings[x]!=INT_MAX)
                 {
-                    if(timings[index] == INT_MAX)
-                        continue;
-                    int newTime = timings[index] + w;
-                    if(newTime < timings[dest])
+                    if(timings[y] > timings[x] + w)
                     {
-                        timings[dest] = newTime;
+                        timings[y] = timings[x] + w;
                         changed = true;
                     }
                 }
-                count++;
             }
             if(!changed)
                 break;
