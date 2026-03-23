@@ -1,35 +1,41 @@
 class Solution {
 public:
-    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+int networkDelayTime(vector<vector<int>>& times, int n, int k) {
 
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>>pq;
-        vector<int>timings(n+1, INT_MAX);
-        vector<vector<int>>adjMatrix(n+1, vector<int>(n+1, INT_MAX));
-
-        for(vector<int>&v1 : times)
+        vector<vector<pair<int,int>>>adjList(n+1);
+        for(vector<int>&v1 :  times)
         {
-            int x = v1[0], y = v1[1], w = v1[2];
-            adjMatrix[x][y] = w;
+            int index = v1[0];
+            adjList[index].push_back({v1[1],v1[2]});
         }
+
+        vector<int>timings(n+1, INT_MAX);
         timings[k] = 0;
-        pq.push({0, k});
-        while(!pq.empty())
+        int count = 0;
+        for(int i = 1 ; i < n ; i++)
         {
-            auto [x,y] = pq.top(); pq.pop();
-            for(int i = 1 ; i <= n ; i++)
+            count = 0;
+            bool changed = false;
+            for(int j = k ; count < n+1 ; j++)
             {
-                if(adjMatrix[y][i]!=INT_MAX)
+                int index = j%(n+1);
+                for(auto [dest,w] : adjList[index])
                 {
-                    int newTime = x + adjMatrix[y][i];
-                    if(newTime < timings[i])
+                    if(timings[index] == INT_MAX)
+                        continue;
+                    int newTime = timings[index] + w;
+                    if(newTime < timings[dest])
                     {
-                        timings[i] = newTime;
-                        pq.push({newTime, i});
+                        timings[dest] = newTime;
+                        changed = true;
                     }
                 }
+                count++;
             }
+            if(!changed)
+                break;
         }
-        int ans = *max_element(timings.begin()+1,timings.end());
+        int ans = *max_element(timings.begin()+1, timings.end());
         return ans!=INT_MAX? ans : -1;
     }
 };
