@@ -1,39 +1,41 @@
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        
-        int currTime = 0;
+
         priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>>pq;
+        vector<int>timings(n+1, INT_MAX);
+        vector<vector<int>>adjMatrix(n+1, vector<int>(n+1, INT_MAX));
 
-        vector<vector<int>>adjM(n+1, vector<int>(n+1, -1));
-
-        for(int i = 0 ; i < times.size() ; i++)
+        for(vector<int>&v1 : times)
         {
-            vector<int>v1 = times[i];
-            int x = v1[0], y = v1[1], time = v1[2];
-            adjM[x][y] = time;
+            int x = v1[0], y = v1[1], w = v1[2];
+            adjMatrix[x][y] = w;
         }
-        pq.push({currTime,k});
-        unordered_set<int>set1;
+        timings[k] = 0;
+        pq.push({0, k});
         while(!pq.empty())
         {
-            auto [time,curr] = pq.top();
-            pq.pop();
-
-            if(set1.count(curr))
-                continue;
-            set1.insert(curr);
-            currTime = time;
-            for(int i = 1; i <= n ; i++)
+            auto [x,y] = pq.top(); pq.pop();
+            for(int i = 1 ; i <= n ; i++)
             {
-                int val = adjM[curr][i];
-                if(val!= -1)
+                if(adjMatrix[y][i]!=INT_MAX)
                 {
-                    int time = currTime + val;
-                    pq.push({time, i});
+                    int newTime = x + adjMatrix[y][i];
+                    if(newTime < timings[i])
+                    {
+                        timings[i] = newTime;
+                        pq.push({newTime, i});
+                    }
                 }
             }
         }
-        return set1.size() == n ? currTime : -1;
+        int minTime = 0;
+        for(int i = 1 ; i <=n ; i++)
+        {
+            if(timings[i] == INT_MAX)
+                return -1;
+            minTime = max(minTime, timings[i]);
+        }
+        return minTime;
     }
 };
