@@ -5,28 +5,16 @@ public:
         stack<char>st;
         for(char ch : s)
         {
-            if(ch == '(' || ch == '{' || ch == '[')
-            {
+            if(ch == '(' || ch == '[' || ch == '{')
                 st.push(ch);
-            }
-            else if(ch == ')')
-            {
-                if(st.empty() || st.top() != '(')
-                    return false;
+            else if(ch == ')' && (st.empty() || st.top()!='('))
+                return false;
+            else if(ch == '}' && (st.empty() || st.top()!='{'))
+                return false;
+            else if(ch == ']' && (st.empty() || st.top()!='['))
+                return false;
+            else
                 st.pop();
-            }
-            else if(ch == '}')
-            {
-                if(st.empty() || st.top() != '{')
-                    return false;
-                st.pop();
-            }
-            else if(ch == ']')
-            {
-                if(st.empty() || st.top() != '[')
-                    return false;
-                st.pop();
-            }
         }
         return st.empty();
     }
