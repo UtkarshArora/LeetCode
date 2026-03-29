@@ -4,16 +4,18 @@ public:
         
         unordered_map<int,int>map1;
         vector<int>ans;
-        for(int i = 0 ; i < nums.size() ; i++)
+        for(int i = 0 ; i < nums.size(); i++)
         {
-            int num1 = target - nums[i];
-            if(map1.find(num1)!=map1.end())
+            int num = nums[i];
+            int diff = target - num;
+            if(map1.count(diff))
             {
+                int index = map1[diff];
+                ans.push_back(index);
                 ans.push_back(i);
-                ans.push_back(map1[num1]);
                 break;
             }
-            map1[nums[i]] = i;
+            map1[num] = i;
         }
         return ans;
     }
