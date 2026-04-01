@@ -22,33 +22,28 @@ public:
 class Solution {
 public:
 
-    Node* clone(Node* node, unordered_map<Node*, Node*>& clones)
+    Node* clone(Node* node, unordered_map<Node*,Node*>& map1)
     {
+        if(node == NULL)
+            return node;
+        if(map1.find(node)!=map1.end())
+            return map1[node];
+        
         Node* newNode = new Node(node->val);
-        clones[node] = newNode;
-        for(auto ne : node->neighbors)
+        map1[node] = newNode;
+        for(Node* n : node->neighbors)
         {
-            if(clones.find(ne)!=clones.end())
+            if(map1.find(n) == map1.end())
             {
-                newNode->neighbors.push_back(clones[ne]);
+                newNode->neighbors.push_back(clone(n, map1));
             }
             else
-            {
-                newNode->neighbors.push_back(clone(ne, clones));
-            }
+                newNode->neighbors.push_back(map1[n]);
         }
         return newNode;
     }
     Node* cloneGraph(Node* node) {
-        if(!node)
-        {
-            return NULL;
-        }
-        else if(node->neighbors.size() == 0)
-        {
-            return new Node(node->val);
-        }
-        unordered_map<Node*, Node*>clones;
-        return clone(node, clones);
+        unordered_map<Node*, Node*>map1;
+        return clone(node, map1);
     }
 };
