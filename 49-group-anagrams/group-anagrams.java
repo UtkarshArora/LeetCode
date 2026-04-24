@@ -20,11 +20,12 @@ class Solution {
             list1.add(s);
             mp.put(s2, list1);
         }
-        List<List<String>>ans = new ArrayList<>();
-        for(var e : mp.entrySet())
-        {
-            ans.add(e.getValue());
-        }
-        return ans;
+        // List<List<String>>ans = new ArrayList<>();
+        // for(var e : mp.entrySet())
+        // {
+        //     ans.add(e.getValue());
+        // }
+        return new ArrayList<>(mp.values());
+        // return ans;
     }
 }
