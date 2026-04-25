@@ -9,27 +9,13 @@ class Solution {
             else if(st.size() == 0)
                 return false;
             else{
-                if(ch == ')')
+                if((ch == ')' && st.peek()!= '(') ||   
+                 (ch == '}' && st.peek()!= '{') || 
+                 (ch == ']' && st.peek()!= '['))
                 {
-                    if(st.peek() == '(')
-                        st.pop();
-                    else
-                        return false;
+                    return false;
                 }
-                else if(ch == '}')
-                {
-                    if(st.peek() == '{')
-                        st.pop();
-                    else
-                        return false;
-                }
-                else if(ch == ']')
-                {
-                    if(st.peek() == '[')
-                        st.pop();
-                    else
-                        return false;
-                }
+                st.pop();
             }
         }
         return st.size() == 0;
