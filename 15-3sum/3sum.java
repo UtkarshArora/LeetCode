@@ -8,14 +8,12 @@ class Solution {
         {
             if(i > 0 && nums[i] == nums[i-1])
                 continue;
-            int num = nums[i];
-            int target = -nums[i];
             int start = i+1;
             int end = n-1;
             while(start < end)
             {
-                int sum = nums[start] + nums[end];
-                if(sum == target)
+                int sum = nums[start] + nums[end] + nums[i];
+                if(sum == 0)
                 {
                     List<Integer>list1 = new ArrayList<>(List.of(nums[i], nums[start], nums[end]));
                     ans.add(list1);
@@ -23,14 +21,9 @@ class Solution {
                     {
                         start++;
                     }
-                    while(start < end && nums[end] == nums[end-1])
-                    {
-                        end--;
-                    }
                     start++;
-                    end--;
                 }
-                else if(sum < target)
+                else if(sum < 0)
                     start++;
                 else
                     end--;
