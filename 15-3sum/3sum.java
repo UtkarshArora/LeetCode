@@ -17,11 +17,11 @@ class Solution {
                 {
                     List<Integer>list1 = new ArrayList<>(List.of(nums[i], nums[start], nums[end]));
                     ans.add(list1);
-                    while(start < end && nums[start] == nums[start+1])
+                    start++;
+                    while(start < end && nums[start] == nums[start-1])
                     {
                         start++;
                     }
-                    start++;
                 }
                 else if(sum < 0)
                     start++;
