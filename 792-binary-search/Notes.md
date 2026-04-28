@@ -1,1 +1,1 @@
-<h2>binary-search Notes</h2><hr>[ Time taken: 4m 37s ]
+<h2>binary-search Notes</h2><hr>[ Time taken: 10m 36s ]
