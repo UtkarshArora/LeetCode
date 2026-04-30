@@ -7,10 +7,12 @@ class Solution:
             freqMap[n] = 1 + freqMap.get(n, 0)
         
         for key, value in freqMap.items():
-            heapq.heappush(heap, (-value, key))
+            heapq.heappush(heap, (value, key))
+            if(len(heap) > k):
+                heapq.heappop(heap)
         
         res = []
-        while len(res) < k:
+        while heap:
             res.append(heapq.heappop(heap)[1])
         
         return res
