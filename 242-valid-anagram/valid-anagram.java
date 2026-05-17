@@ -1,26 +1,20 @@
 class Solution {
     public boolean isAnagram(String s, String t) {
         
-        int[] arr = new int[26];
-        
-        if(s.length() != t.length())
+        if(s.length()!=t.length())
             return false;
         
+        HashMap<Character, Integer>sCount = new HashMap<>();
+        HashMap<Character, Integer>tCount = new HashMap<>();
+
         for(int i = 0 ; i < s.length() ; i++)
         {
-            int index = s.charAt(i)-'a';
-            arr[index]++;
+            char ch1 = s.charAt(i); 
+            char ch2 = t.charAt(i);
+            sCount.put(ch1, 1 + sCount.getOrDefault(ch1, 0));
+            tCount.put(ch2, 1 + tCount.getOrDefault(ch2, 0));
         }
-        for(int i = 0 ; i < t.length(); i++)
-        {
-            int index = t.charAt(i) - 'a';
-            arr[index]--;
-        }
-        for(int i = 0 ; i < 26 ; i++)
-        {
-            if(arr[i]!=0)
-                return false;
-        }
-        return true;
+
+        return sCount.equals(tCount);
     }
 }
