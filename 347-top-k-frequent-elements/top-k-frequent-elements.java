@@ -1,32 +1,32 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
         
-        PriorityQueue<Pair<Integer,Integer>>freq = new PriorityQueue<>((a,b) -> {return b.getKey() - a.getKey();});
-        HashMap<Integer,Integer>mp = new HashMap<>();
-        int[] ans = new int[k];
+        //store numbers and their freq in HashMap
+        HashMap<Integer, Integer>map1 = new HashMap<>();
         for(int num : nums)
         {
-            if(mp.containsKey(num)){
-                int val = mp.get(num);
-                mp.put(num, val+1);
-            }
-            else{
-                mp.put(num,1);
-            }
+            map1.put(num, map1.getOrDefault(num,0) + 1);
         }
 
-        for(int p : mp.keySet())
+        //store pair of <freq, number> in Priority Queue
+        PriorityQueue<int[]>pq = new PriorityQueue<>((a,b) -> a[0] - b[0]);
+        for(var e : map1.entrySet())
         {
-            int val = mp.get(p);
-            Pair<Integer,Integer> pair1 = new Pair(val, p);
-            freq.add(pair1);
+            int[] arr = new int[2];
+            arr[0] = e.getValue(); arr[1] = e.getKey();
+            pq.offer(arr);
+            if(pq.size() > k)
+                pq.poll();
         }
-        int count = 0;
-        while(count < k)
+        
+        int[] ans = new int[k]; 
+        int index = 0;
+        // extracting from pq and pushing
+        while(pq.size() > 0)
         {
-            Pair<Integer, Integer> p = freq.poll();
-            ans[count]= p.getValue();
-            count++;
+            int[] arr = pq.poll();
+            ans[index]= arr[1];
+            index++;
         }
         return ans;
     }
