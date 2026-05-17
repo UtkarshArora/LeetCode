@@ -6,15 +6,21 @@ class Solution {
         
         HashMap<Character, Integer>sCount = new HashMap<>();
         HashMap<Character, Integer>tCount = new HashMap<>();
+        int[] charCounts = new int[26];
 
         for(int i = 0 ; i < s.length() ; i++)
         {
-            char ch1 = s.charAt(i); 
-            char ch2 = t.charAt(i);
-            sCount.put(ch1, 1 + sCount.getOrDefault(ch1, 0));
-            tCount.put(ch2, 1 + tCount.getOrDefault(ch2, 0));
+            int index1 = s.charAt(i) - 'a'; 
+            int index2 = t.charAt(i) - 'a';
+            charCounts[index1]++;
+            charCounts[index2]--;
         }
 
-        return sCount.equals(tCount);
+        for(int i = 0 ; i < 26 ; i++)
+        {
+            if(charCounts[i]!=0)
+                return false;
+        }
+        return true;
     }
 }
