@@ -1,40 +1,66 @@
 class Solution {
 public:
-    bool checkValid(char ch, vector<int>& countChar) {
-        if (ch == '.')
-            return true;
-        int idx = ch - '0';
-        if (idx < 0 || idx > 9)
-            return false;
-        countChar[idx]++;
-        return countChar[idx] == 1;
+    bool checkRow(vector<vector<char>>& board, int rowIndex) {
+
+        vector<bool> checkNum(9, false);
+        for (int j = 0; j < 9; j++) {
+            if (board[rowIndex][j] == '.') {
+                continue;
+            }
+            int num = board[rowIndex][j] - '1';
+            if (checkNum[num]) {
+                return false;
+            }
+            checkNum[num] = true;
+        }
+        return true;
+    }
+    bool checkCol(vector<vector<char>>& board, int colIndex) {
+        vector<bool> checkNum(9, false);
+        for (int i = 0; i < 9; i++) {
+            if (board[i][colIndex] == '.') {
+                continue;
+            }
+            int num = board[i][colIndex] - '1';
+            if (checkNum[num]) {
+                return false;
+            }
+            checkNum[num] = true;
+        }
+        return true;
     }
     bool isValidSudoku(vector<vector<char>>& board) {
 
-        for (int i = 0; i < 9; i++) {
-            vector<char> row = board[i];
-            vector<int> countChar(10);
-            for (char ch : row) {
-                if (!checkValid(ch, countChar))
-                    return false;
+        // solution 1: check for each row, grid and subgrid respectively
+
+        int n = board.size();
+        for (int i = 0; i < n; i++) {
+            if (!checkRow(board, i)) {
+                return false;
             }
         }
-        for (int j = 0; j < 9; j++) {
-            vector<int> countChar(10);
-            for (int i = 0; i < 9; i++) {
-                char ch = board[i][j];
-                if (!checkValid(ch, countChar))
-                    return false;
+        for (int j = 0; j < n; j++) {
+            if (!checkCol(board, j)) {
+                return false;
             }
         }
-        for (int i = 0; i < 9; i = i + 3) {
-            for (int j = 0; j < 9; j = j + 3) {
-                vector<int> countChar(10);
-                for (int k = i; k < i + 3; k++) {
-                    for (int l = j; l < j + 3; l++) {
-                        char ch = board[k][l];
-                        if (!checkValid(ch, countChar))
+        // check grid code
+        for (int i = 0; i < 9; i+= 3) {
+            for (int j = 0 ; j < 9 ; j+=3) {
+                
+                vector<bool>checkNum(9, false);
+                for(int k = i; k < i + 3; k++)
+                {
+                    for(int m = j ; m < j + 3 ; m++)
+                    {
+                        if (board[k][m] == '.') {
+                            continue;
+                        }
+                        int num = board[k][m] - '1';
+                        if (checkNum[num]) {
                             return false;
+                        }
+                        checkNum[num] = true;
                     }
                 }
             }
