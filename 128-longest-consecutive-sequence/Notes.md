@@ -1,1 +1,1 @@
-<h2>longest-consecutive-sequence Notes</h2><hr>[ Time taken: 10 m 24 s ]
+<h2>longest-consecutive-sequence Notes</h2><hr>[ Time taken: 35m 40s ]
