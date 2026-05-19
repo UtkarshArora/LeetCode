@@ -26,10 +26,9 @@ public:
                 }
                 else if(sum == 0)
                 {
-                    vector<int>ans = {nums[i], nums[start], nums[end]};
-                    finalAns.push_back(ans);
-                    start++;
-                    end--;
+                finalAns.push_back({nums[i], nums[start], nums[end]});
+                start++;
+                end--;
                     while(start < end && nums[start] == nums[start-1])
                     {
                         start++;
