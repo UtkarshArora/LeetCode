@@ -2,40 +2,41 @@ class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         
-        int n = nums.size();
+        // solution 1: run 3 loops
+        vector<vector<int>>finalAns;
         sort(nums.begin(), nums.end());
-        vector<vector<int>>ans;
-        unordered_set<string>set1;
-        for(int i = 0 ; i < n-2 ; i++)
+        int n = nums.size();
+        for(int i = 0 ; i < n ; i ++)
         {
             if(i > 0 && nums[i] == nums[i-1])
+            {
                 continue;
-            int sum = nums[i];
-            int start = i+1, end = n-1;
+            }
+            int start = i + 1, end = n - 1;
             while(start < end)
             {
-                int sum2 = nums[start] + nums[end];
-                if(sum2 + sum == 0)
+                int sum = nums[i] + nums[start] + nums[end];
+                if(sum > 0)
                 {
-                    string s1 = to_string(nums[i]) + "#" + to_string(nums[start]) + "#"+ to_string(nums[end]);
-                    if(!set1.count(s1)){
-                        set1.insert(s1);
-                        vector<int>v1 = {nums[i], nums[start], nums[end]};
-                        ans.push_back(v1);
-                    }
-                    start++;
                     end--;
                 }
-                else if(sum2 + sum > 0)
-                {
-                    end--;
-                }   
-                else
+                else if(sum < 0)
                 {
                     start++;
+                }
+                else if(sum == 0)
+                {
+                    vector<int>ans = {nums[i], nums[start], nums[end]};
+                    finalAns.push_back(ans);
+                    start++;
+                    end--;
+                    while(start < end && nums[start] == nums[start-1])
+                    {
+                        start++;
+                    }
                 }
             }
         }
-        return ans;
+        return finalAns;
     }
 };
