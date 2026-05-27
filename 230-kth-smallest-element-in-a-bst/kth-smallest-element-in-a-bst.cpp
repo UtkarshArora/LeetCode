@@ -11,26 +11,22 @@
  */
 class Solution {
 public:
-    
-    void preOrder(TreeNode* root, int k, int& count, int& ans)
+
+    void inorder(TreeNode* root, int k, vector<int>& traversal)
     {
         if(root == NULL)
             return;
         
-        preOrder(root->left, k, count, ans);
-        count++;
-        if(count == k)
-            {
-                ans = root->val;
-                return;
-            }
-        preOrder(root->right, k, count, ans);
+        inorder(root->left, k, traversal);
+        traversal.push_back(root->val);
+        inorder(root->right, k, traversal);
     }
     int kthSmallest(TreeNode* root, int k) {
         
-        int count = 0;
-        int ans = -1;
-        preOrder(root, k, count, ans);
-        return ans;
+        // main point: during inorder traversal, you are doing inorder traversal only, kth node in that will give you the answer
+        
+        vector<int>traversal;
+        inorder(root, k, traversal);
+        return traversal[k-1];
     }
 };
