@@ -12,21 +12,29 @@
 class Solution {
 public:
 
-    void inorder(TreeNode* root, int k, vector<int>& traversal)
+    void inorder(TreeNode* root, int& count, int &ans, int k)
     {
         if(root == NULL)
             return;
-        
-        inorder(root->left, k, traversal);
-        traversal.push_back(root->val);
-        inorder(root->right, k, traversal);
+        //cout<<"root->val:"<<root->val<<", count:"<<count<<endl;
+        inorder(root->left, count, ans, k);
+        count+=1;
+        //cout<<"count:"<<count<<endl;
+        if(count == k)
+        {
+            ans = root->val;
+            return;
+        }
+        // cout<<"count after increment:"<<count<<endl;
+        inorder(root->right, count, ans, k);
     }
     int kthSmallest(TreeNode* root, int k) {
         
         // main point: during inorder traversal, you are doing inorder traversal only, kth node in that will give you the answer
         
-        vector<int>traversal;
-        inorder(root, k, traversal);
-        return traversal[k-1];
+        int count = 0;
+        int ans;
+        inorder(root, count, ans, k);
+        return ans;
     }
 };
