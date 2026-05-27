@@ -6,45 +6,41 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
 public:
 
-    //(3,3) => (4,3) => (1,3) => 
-
-    bool isSubTreeHelper(TreeNode* root, TreeNode* subRoot)
+    bool isSameTree(TreeNode* root, TreeNode* subRoot)
     {
-        if (!root && !subRoot)
+        if(root == NULL && subRoot == NULL)
             return true;
 
-        if (!root && subRoot || root && !subRoot)
-            return false;
-        
-        if(root->val!=subRoot->val)
+        if(root == NULL || subRoot == NULL)
             return false;
 
-        return isSubTreeHelper(root->left, subRoot->left) && isSubTreeHelper(root->right, subRoot->right);
+        return root->val == subRoot->val && isSameTree(root->left, subRoot->left) && isSameTree(root->right, subRoot->right);
     }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-
-        if (!root && !subRoot)
+        
+        // put them in vector, compare and return
+        // compare node by node, preorder comparison using DFS
+        // compare node ny node, using level order
+        if(root == NULL && subRoot == NULL)
             return true;
 
-        if (!root && subRoot || root && !subRoot)
+        if(root == NULL || subRoot == NULL)
             return false;
 
-        bool left = isSubtree(root->left, subRoot);
-        bool right = isSubtree(root->right, subRoot);
-        if (left || right){
-            return true;
+        if(root->val == subRoot->val)
+        {
+            bool ans = isSameTree(root->left, subRoot->left) && isSameTree(root->right, subRoot->right);
+            if(ans)
+            {
+                return true;
+            }
         }
-        if (root->val == subRoot->val) {
-            return isSubTreeHelper(root->left, subRoot->left) &&
-                   isSubTreeHelper(root->right, subRoot->right);
-        }
-        return false;
+        return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
     }
 };
