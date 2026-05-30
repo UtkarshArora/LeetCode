@@ -1,30 +1,58 @@
 class Solution {
 public:
-    vector<vector<int>> insert(vector<vector<int>>& intervals,
-                               vector<int>& newInterval) {
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        
 
-        vector<vector<int>> result;
+        vector<vector<int>>result;
+        int insertIndex = -1;
         int n = intervals.size();
-        int start = 0;
-        while (start < n && intervals[start][0] < newInterval[0]) {
-            result.push_back(intervals[start]);
-            start++;
+        bool inserted = false;
+        // find where to insert Index
+        
+        //Case 1: intervals is empty
+        if(intervals.empty())
+        {
+            result.push_back(newInterval);
+            return result;
         }
-        // check for min and max here as well
-        if (!result.empty() && newInterval[0] <= result.back()[1]) {
-            result.back()[0] = min(newInterval[0], result.back()[0]);
-            result.back()[1] = max(newInterval[1], result.back()[1]);
-        } else {
+
+        // Case 2: intervals[0] is greater than newInterval
+        if(!intervals.empty() && newInterval[1] < intervals[0][0])
+        {
+            result.push_back(newInterval);
+            inserted = true;
+        }
+
+        // finding where to insert index
+        for(int i = 0 ; i < n ; i++)
+        {
+            insertIndex++;
+            if(!inserted && newInterval[0] <= intervals[i][1])
+            {
+                break;
+            }
+            result.push_back(intervals[i]);
+        }
+
+        if(result.size() >= n)
+        {
+            if(!inserted){
+                result.push_back(newInterval);
+            }
+            return result;
+        }
+        if(!inserted) {
             result.push_back(newInterval);
         }
-        for (int i = start; i < n; i++) {
-            vector<int> newInterval = intervals[i];
-            vector<int> v1 = result.back();
-            if (newInterval[0] <= v1[1]) {
-                result.back()[0] = min(newInterval[0], v1[0]);
-                result.back()[1] = max(newInterval[1], v1[1]);
-            } else {
-                result.push_back(newInterval);
+        for(int i = insertIndex ; i < n ; i++)
+        {
+            if(!result.empty() && result.back()[1] >= intervals[i][0])
+            {
+                result.back()[0] = min(result.back()[0], intervals[i][0]);
+                result.back()[1] = max(result.back()[1], intervals[i][1]);
+            }
+            else{
+                result.push_back(intervals[i]);
             }
         }
         return result;
