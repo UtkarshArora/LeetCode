@@ -1,21 +1,25 @@
 class Solution {
 public:
-    vector<vector<int>>ans;
-    void subSet(vector<int>v1, vector<int>& nums, int index)
+
+    void subset(vector<int>& nums, int index, vector<int>&curr,vector<vector<int>>&res)
     {
         if(index == nums.size())
         {
-            ans.push_back(v1);
+            res.push_back(curr);
             return;
         }
-        subSet(v1, nums, index+1);
-        v1.push_back(nums[index]);
-        subSet(v1, nums, index+1);
+        curr.push_back(nums[index]);
+        cout<<"index:"<<index<<endl;
+        
+        subset(nums, index+1, curr, res);
+        curr.pop_back();
+        subset(nums, index+1, curr, res);
     }
-
     vector<vector<int>> subsets(vector<int>& nums) {
-        vector<int>v1 = {};
-        subSet(v1, nums, 0);
-        return ans;
+        
+        vector<vector<int>>res;
+        vector<int>curr;
+        subset(nums, 0, curr, res);
+        return res;
     }
 };
