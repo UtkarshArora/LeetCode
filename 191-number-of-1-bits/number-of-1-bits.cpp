@@ -2,8 +2,12 @@ class Solution {
 public:
     int hammingWeight(int n) {
         
-        if(n == 1)
-            return 1;
-        return (n & 1) + hammingWeight(n>>1); 
+        int sum = 0;
+        while(n!=0)
+        {
+            sum++;
+            n  = n & (n-1);
+        }
+        return sum;
     }
 };
