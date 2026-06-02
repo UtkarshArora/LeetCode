@@ -10,9 +10,9 @@ public:
         if(isalpha(s[index]))
         {
             string curr1 = curr;
-            curr+= toupper(s[index]);
+            curr += (char)toupper(s[index]);
             letterCase(s, index+1, curr, res);
-            curr1+= tolower(s[index]);
+            curr1+= (char)tolower(s[index]);
             letterCase(s, index+1, curr1, res);
         }
         else{
