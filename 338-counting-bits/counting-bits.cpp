@@ -1,12 +1,24 @@
 class Solution {
 public:
-    vector<int> countBits(int n) {
 
-        vector<int>ans(n+1);
-        ans[0] = 0;
-        for(int i = 1 ; i <=n ; i++)
+    int cB(int num)
+    {
+        int count = 0;
+        while(num!=0)
         {
-            ans[i] = ans[i/2] + i%2;
+            count++;
+            num = num & (num-1);
+        }
+        return count;
+    }
+    vector<int> countBits(int n) {
+        
+        vector<int>ans(n+1);
+        
+        for(int i = 0 ; i <= n ; i++)
+        {
+            int num = cB(i);
+            ans[i] = num;
         }
         return ans;
     }
