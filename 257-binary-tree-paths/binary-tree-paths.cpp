@@ -17,18 +17,15 @@ public:
     {
         if(root == NULL)
             return;
-        if(path.empty())
-        {
-            path = to_string(root->val);
-        }
-        else
-        {
-            path = path + "->" + to_string(root->val);
-        }
+        
+        path+=to_string(root->val);
         if(root->left == NULL && root->right == NULL)
         {
             res.push_back(path);
             return;
+        }
+        else{
+            path+="->";
         }
         DFS(root->left, path, res);
         DFS(root->right, path, res);
