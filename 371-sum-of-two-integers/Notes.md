@@ -1,1 +1,1 @@
-<h2>sum-of-two-integers Notes</h2><hr>[ Time taken: 17m 56s ]
+<h2>sum-of-two-integers Notes</h2><hr>[ Time taken: 39m 19s ]
