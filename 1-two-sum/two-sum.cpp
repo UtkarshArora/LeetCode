@@ -2,21 +2,21 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         
-        unordered_map<int,int>map1;
-        vector<int>ans;
-        for(int i = 0 ; i < nums.size(); i++)
+        // approach 1: use 2 loop, n^2
+        // approach 2: traverse 2 times, O(n), store in hashmap
+        // approach 3: traverse once, O(n)
+
+        unordered_map<int,int>indices;
+        for(int i = 0 ; i < nums.size() ; i++)
         {
-            int num = nums[i];
-            int diff = target - num;
-            if(map1.count(diff))
+            int complement = target - nums[i];
+            if(indices.find(complement)!=indices.end())
             {
-                int index = map1[diff];
-                ans.push_back(index);
-                ans.push_back(i);
-                break;
+                int index = indices[complement];
+                return {index, i};
             }
-            map1[num] = i;
+            indices[nums[i]] = i;
         }
-        return ans;
+        return {-1,-1};
     }
 };
