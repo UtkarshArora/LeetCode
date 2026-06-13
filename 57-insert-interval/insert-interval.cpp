@@ -2,45 +2,31 @@ class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
         
+        // find index where to insert
+        // insert
+        // merge overlapping intervals
 
-        vector<vector<int>>result;
-        int insertIndex = 0;
-        int n = intervals.size();
-        bool inserted = false;
-
-        // Case 1: intervals[0] is greater than newInterval
-        if(intervals.empty() || (!intervals.empty() && newInterval[1] < intervals[0][0]))
+        int index = 0;
+        vector<vector<int>>res;
+        while(index < intervals.size() && newInterval[0] > intervals[index][1])
         {
-            result.push_back(newInterval);
-            inserted = true;
-            insertIndex = n;
+            res.push_back(intervals[index]);
+            index++;
         }
-
-        // finding where to insert index
-        for(int i = 0 ; i < n ; i++)
-        {   
-            if(!inserted && newInterval[0] <= intervals[i][1])
-            {
-                break;
-            }
-            result.push_back(intervals[i]);
-            insertIndex++;
-        }
-
-        if(!inserted) {
-            result.push_back(newInterval);
-        }
-        for(int i = insertIndex ; i < n ; i++)
+        res.push_back(newInterval);
+        while(index < intervals.size())
         {
-            if(!result.empty() && result.back()[1] >= intervals[i][0])
+            if(intervals[index][0] <= res.back()[1])
             {
-                result.back()[0] = min(result.back()[0], intervals[i][0]);
-                result.back()[1] = max(result.back()[1], intervals[i][1]);
+                res.back()[0] = min(intervals[index][0], res.back()[0]);
+                res.back()[1] = max(intervals[index][1], res.back()[1]);
             }
-            else{
-                result.push_back(intervals[i]);
+            else
+            {
+                res.push_back(intervals[index]);
             }
+            index++;
         }
-        return result;
+        return res;
     }
 };
