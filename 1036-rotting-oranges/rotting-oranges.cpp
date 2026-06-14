@@ -1,52 +1,59 @@
 class Solution {
 public:
+
+    bool isValid(int x, int y, int n, int m)
+    {
+        return x >=0 && x < n && y >=0 && y < m;
+    }
     int orangesRotting(vector<vector<int>>& grid) {
+        
+        // BFS, O(m*n)
+        int n = grid.size(), m = grid[0].size();
 
-        int n = grid.size();
-        int m = grid[0].size();
-        vector<pair<int,int>>dirs = {{-1,0},{1,0},{0,1},{0,-1}};
-        queue<pair<int,int>>q;
-        int num_fresh = 0;
+        vector<vector<int>>dirs = {{-1,0}, {1, 0}, {0, -1}, {0,1}};
 
+        queue<pair<int,int>>rotten;
+        int freshOranges = 0, rottenOranges = 0;
         for(int i = 0 ; i < n ; i++)
         {
-            for(int j = 0 ; j < m; j++)
+            for(int j = 0 ; j < m ; j++)
             {
+                if(grid[i][j] == 1)
+                {
+                    freshOranges++;
+                }
                 if(grid[i][j] == 2)
                 {
-                    pair<int,int>p = make_pair(i,j);
-                    q.push(p);
-                }
-                else if(grid[i][j] == 1)
-                {
-                    num_fresh++;
+                    rotten.push({i,j});
+                    rottenOranges++;
                 }
             }
         }
+        int total = freshOranges + rottenOranges;
         int mins = 0;
-        while(!q.empty())
+        while(!rotten.empty())
         {
-            int num_rotten = q.size();
-            int count = 0;
-            mins = mins + (int)(num_fresh > 0);
-            while(count < num_rotten)
-            {
-                pair<int,int>p1 = q.front(); q.pop();
-                for(int i = 0 ; i < 4 ; i++)
+            int num_rotten = rotten.size();
+            bool pushed = false;
+            for(int i = 0 ; i < num_rotten ; i++){
+                pair<int,int>p = rotten.front();
+                rotten.pop();
+                int x = p.first, y = p.second;
+                for(int dir = 0 ; dir < 4 ; dir++)
                 {
-                    auto [x,y] = dirs[i];
-                    int x1 = p1.first + x;
-                    int y1 = p1.second + y;
-                    if(x1>=0 && x1<n && y1>=0 && y1<m && grid[x1][y1] == 1)
+                    int new_x = x + dirs[dir][0];
+                    int new_y = y + dirs[dir][1];
+                    if(isValid(new_x, new_y, n, m) && grid[new_x][new_y] == 1)
                     {
-                        q.push({x1, y1});
-                        grid[x1][y1] = 2;
-                        num_fresh--;
+                        rotten.push({new_x, new_y});
+                        grid[new_x][new_y] = 2;
+                        rottenOranges++;
+                        pushed = true;
                     }
                 }
-                count++;
             }
+            mins = mins + (pushed == true);
         }
-        return (num_fresh == 0)? mins : -1;
+        return rottenOranges == total ? mins : -1;
     }
 };
