@@ -5,7 +5,7 @@ public:
         // brute force is O(n*n)
        
        int n = nums.size();
-       vector<int>ans(n, 0);
+       //vector<int>ans(n, 0);
        int left = 0 , right = 0;
        int prod = 1;
        int prev = 0;
@@ -22,13 +22,12 @@ public:
                 int add = (right - left+1);
                 if(right >= 1)
                 {
-                    ans[right] = prev + add;
+                    prev = prev + add;
                 }
                 else
                 {
-                    ans[right] = add;  
+                    prev = add;  
                 }
-                prev = ans[right];
             }
             right++;
        }
