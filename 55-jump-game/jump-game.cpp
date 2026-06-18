@@ -25,24 +25,17 @@ public:
     // }
     bool canJump(vector<int>& nums) {
         
+        //return canJump(nums, 0);
         int n = nums.size();
-        vector<bool>isPossible(n, false);
-        isPossible[n-1] = true;
-        for(int i = n-2 ; i >=0 ; i--)
+        int maxsoFar = 0;
+        for(int i = 0 ; i < n ; i++)
         {
-            int val = nums[i];
-            if(val > 0)
+            if(maxsoFar < i)
             {
-                for(int j = i + 1 ; j <= (i+val) && j < n ; j++)
-                {
-                    if(isPossible[j])
-                    {
-                        isPossible[i] = true;
-                        break;
-                    }
-                }
+                return false;
             }
+            maxsoFar = max(maxsoFar, i + nums[i]); 
         }
-        return isPossible[0];
+        return true;
     }
 };
