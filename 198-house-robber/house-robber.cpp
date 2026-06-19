@@ -1,32 +1,47 @@
 class Solution {
 public:
 
-    int maxRob(vector<int>&nums, int index, vector<int>&dp)
-    {
-        if(index == 0)
-            return nums[0];
-        if(index == 1)
-            return max(nums[0], nums[1]);
-        if(dp[index]!=-1)
-            return dp[index];
+    // int sum(vector<int>& nums, int index, vector<bool>included)
+    // {
+    //     if(index == nums.size())
+    //         return 0;
         
-        dp[index] = max(maxRob(nums, index-2, dp) + nums[index], maxRob(nums, index-1, dp));
-        return dp[index];
-    }
+    //     int sum1 = 0, sum2 = 0;
+    //     if(index > 0 && !included[index-1] || index == 0){
+    //         included[index] = true;
+    //         sum1 = nums[index] + sum(nums, index+1, included);
+    //     }
+    //     included[index] = false;
+    //     sum2 = sum(nums, index+1, included);
+    //     return max(sum1, sum2);
+    // }
+    // int rob(vector<int>& nums) {
+
+    //     int n = nums.size();
+    //     vector<bool>included(n, false);
+    //     return sum(nums, 0, included);
+    // }
+
     int rob(vector<int>& nums) {
-        
+
         int n = nums.size();
-        vector<int>dp(n, -1);
-        if(n >= 1){
-            dp[0] = nums[0];
-        }
-        if(n >= 2){
-            dp[1] = max(nums[0], nums[1]);
-        }
-        for(int i = 2; i < n ; i++)
+        vector<int>maxtillNow(n, 0);
+        maxtillNow[0] = nums[0];
+        if(n == 1)
+            return nums[0];
+        maxtillNow[1] = max(nums[0], nums[1]);
+
+        for(int i = 2 ; i < n ; i++)
         {
-            dp[i] = max(dp[i-2] + nums[i], dp[i-1]);
+            maxtillNow[i] = max(maxtillNow[i-1], maxtillNow[i-2] + nums[i]);
         }
-        return dp[n-1];
+        return maxtillNow[n-1];
     }
+    /*
+        [1,2,3,1] -> [1] -> [1,3] -> [1,3]-> 4  , [] -> [2] -> [2,1], []
+    */
+
+
+
+
 };
