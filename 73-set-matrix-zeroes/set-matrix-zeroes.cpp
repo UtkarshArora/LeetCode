@@ -16,29 +16,56 @@ public:
         }
     }
     void setZeroes(vector<vector<int>>& matrix) {
-        vector<int>rows;
-        vector<int>cols;
 
+        bool cornerZero = false;
+        bool rowZero = false;
+        bool colZero = false;
+        if(matrix[0][0] == 0)
+        {
+            cornerZero = true;
+        }
+            for(int j = 0 ; j < matrix[0].size() ; j++)
+            {
+                if(matrix[0][j] == 0){
+                    rowZero = true;
+                }
+            }
         for(int i = 0 ; i < matrix.size() ; i++)
         {
-            for(int j = 0 ; j < matrix[0].size() ; j++)
+            if(matrix[i][0] == 0){
+                colZero = true;
+            }
+        }
+        for(int i = 1 ; i < matrix.size() ; i++)
+        {
+            for(int j = 1 ; j < matrix[0].size() ; j++)
             {
                 if(matrix[i][j] == 0)
                 {
-                    rows.push_back(i);
-                    cols.push_back(j);
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
                 }
             }
         }
-        for(int i = 0 ; i < cols.size(); i++)
+        for(int j = 1 ; j < matrix[0].size(); j++)
         {
-            int num = cols[i];
-            setColZero(matrix, num);
+            if(matrix[0][j] == 0){
+                setColZero(matrix, j);
+            }
         }
-        for(int i = 0 ; i < rows.size(); i++)
+        for(int i = 1 ; i < matrix.size(); i++)
         {
-            int num = rows[i];
-            setRowZero(matrix, num);
+            if(matrix[i][0] == 0){
+                setRowZero(matrix, i);
+            }
         }
+            if(rowZero)
+            {
+                setRowZero(matrix, 0);
+            }
+            if(colZero)
+            {
+                setColZero(matrix, 0);
+            }
     }
 };
