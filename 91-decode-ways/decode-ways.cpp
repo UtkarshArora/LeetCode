@@ -1,30 +1,35 @@
 class Solution {
 public:
 
-    unordered_map<int, int>memo;
-
-    int recursiveMemo(string s, int index){
-
+    int numDecHelper(string s, int index, vector<int>&memo)
+    {
         if(index == s.size())
         {
             return 1;
         }
-        if(s[index] == '0'){
+        if(s[index] == '0')
+        {
             return 0;
         }
-        if(memo.find(index)!=memo.end())
-        {
+        if(memo[index]!=0){
             return memo[index];
         }
-        int ans = recursiveMemo(s, index+1);
-        if(index+1 < s.size() && stoi(s.substr(index, 2)) >= 10 && stoi(s.substr(index, 2)) <= 26)
+        int ans = numDecHelper(s, index+1, memo);
+        if(index+1 < s.size())
         {
-            ans+=recursiveMemo(s, index+2);
+            int num = stoi(s.substr(index, 2));
+            if(num >= 10 && num <=26)
+            {
+                ans+=numDecHelper(s, index+2, memo);
+            }
         }
         memo[index] = ans;
         return ans;
     }
     int numDecodings(string s) {
-        return recursiveMemo(s, 0);
+
+        int len = s.size();
+        vector<int>memo(len, 0);
+        return numDecHelper(s, 0, memo);
     }
 };
