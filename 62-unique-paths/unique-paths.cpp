@@ -1,31 +1,25 @@
 class Solution {
 public:
-    // int uniqueP(int x, int y, int m, int n, vector<vector<int>>paths)
-    // {
-    //     if(x >= m || y >=n)
-    //         return 0;
-    //     if(x == m-1 && y == n-1)
-    //         return 1;
-    // }
+
+    int unique(int m, int n, int i, int j, vector<vector<int>>&dp)
+    {
+        if(i == m || j == n){
+            return 0;
+        }
+        if(i == m-1 || j == n-1){
+            return 1;
+        }
+        //cout<<"i:"<<i<<", j:"<<j<<endl;
+        if(dp[i][j]!=-1)
+        {
+            return dp[i][j];
+        }
+        dp[i][j] = unique(m, n, i+1, j, dp) + unique(m, n, i, j+1, dp);
+        return dp[i][j];
+    }
     int uniquePaths(int m, int n) {
 
-        vector<vector<int>>paths(m, vector<int>(n,0));
-        paths[0][0] = 1;
-        for(int i = 0 ; i < m ; i++)
-        {
-            paths[i][0] = 1;
-        }
-        for(int j = 0; j < n ; j++)
-        {
-            paths[0][j] = 1;
-        }
-        for(int i = 1 ; i < m ; i++)
-        {
-            for(int j = 1 ; j < n ; j++)
-            {
-                paths[i][j] = paths[i-1][j] + paths[i][j-1];
-            }
-        }
-        return paths[m-1][n-1];
+        vector<vector<int>>dp(m, vector<int>(n, -1));
+        return unique(m, n, 0, 0, dp);
     }
 };
