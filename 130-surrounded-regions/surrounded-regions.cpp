@@ -3,7 +3,6 @@ public:
 
     void DFS(vector<vector<char>>& board, int x, int y)
     {
-        //cout<<x<<y<<endl;
         int n = board.size();
         int m = board[0].size();
         if(x < 0 || x == n || y < 0 || y == m || board[x][y] == 'X' || board[x][y] == 'Y')
@@ -41,24 +40,15 @@ public:
                 DFS(board, i, m-1);
             }
         }
-        for(int i = 1 ; i < n-1 ; i++)
-        {
-            for(int j = 1 ; j < m-1 ; j++)
-            {
-                if(board[i][j] == 'O')
-                {
-                    if(board[i-1][j] == 'X' || board[i+1][j] == 'X' || board[i][j-1] == 'X' || board[i][j+1] == 'X')
-                    {
-                        board[i][j] = 'X';
-                    }
-                }
-            }
-        }
         for(int i = 0 ; i < n ; i++)
         {
             for(int j = 0 ; j < m ; j++)
             {
-                if(board[i][j] == 'Y')
+                if(board[i][j] == 'O')
+                {
+                    board[i][j] = 'X';
+                }
+                else if(board[i][j] == 'Y')
                 {
                     board[i][j] = 'O';
                 }
