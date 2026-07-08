@@ -1,36 +1,47 @@
 class Solution {
 public:
-vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         
-        vector<int>degree(numCourses, 0);
+        // create an array of courses with no prereq
+        // create an adjList which tells us about which courses depend on each other
+
+        // then traverse the no prereq vector, add elements to queue, process courses which depend on them, if the course has no more prereq, add it to queue
+
+        vector<int>preReq(numCourses, 0);
         vector<vector<int>>adjList(numCourses);
-        vector<int>ans;
-
-        for(auto &v1 : prerequisites)
+        for(vector<int>&pre : prerequisites)
         {
-            degree[v1[0]]++;
-            adjList[v1[1]].push_back(v1[0]);    
+            adjList[pre[1]].push_back(pre[0]);
+            preReq[pre[0]]++;
         }
-
         queue<int>q;
-        for(int i = 0; i < numCourses ; i++)
+        for(int i = 0; i < numCourses; i++)
         {
-            if(degree[i] == 0)
-                q.push(i);
-        }
-        if(q.empty())
-            return ans;
-
-        while(!q.empty())
-        {
-            int x = q.front(); q.pop();
-            ans.push_back(x);
-            for(int node : adjList[x])
+            if(preReq[i] == 0)
             {
-                if(--degree[node] == 0)
-                    q.push(node);
+                q.push(i);
             }
         }
-        return (ans.size() == numCourses)? ans : vector<int>();
+        if(q.empty()){
+            return {};
+        }
+        vector<int>res;
+        while(!q.empty())
+        {
+            int num = q.front(); q.pop();
+            for(int course : adjList[num])
+            {
+                preReq[course]-=1;
+                if(preReq[course] == 0){
+                    q.push(course);
+                }
+            }
+            res.push_back(num);
+        }
+        if(res.size() == numCourses)
+        {
+            return res;
+        }
+        return {};
     }
 };
