@@ -1,21 +1,23 @@
 class Solution {
 public:
 
-    unordered_set<int>set1;
+    unordered_set<int>visited;
     bool isHappy(int n) {
 
-        if(n == 1)
-            return true;   
-        if(set1.count(n))
-            return false; 
-        int sum = 0;
-        set1.insert(n);
-        while (n!= 0) {
-            int digit = n % 10;
-            sum+= digit*digit;
-            n = n / 10;
+        if(n == 1){
+            return true;
         }
-        //cout<<sum<<endl;
-        return isHappy(sum);
+        else if(visited.count(n)){
+            return false;
+        }
+        visited.insert(n);
+        int sum_sq = 0;
+        while(n)
+        {
+            int digit = n % 10;
+            sum_sq = sum_sq + (int)pow(digit, 2);
+            n = n/10;
+        }
+        return isHappy(sum_sq);
     }
 };
