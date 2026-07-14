@@ -1,36 +1,50 @@
 class Solution {
 public:
 
-    void DFS(int index, vector<vector<int>>&adjList, unordered_set<int>&visited)
+    int findRep(vector<int>& reps, int x)
     {
-        if(visited.count(index))
-            return;
-
-        visited.insert(index);
-        for(int x : adjList[index])
+        while(x!=reps[x])
         {
-            DFS(x, adjList, visited);
+            x = reps[x];
         }
+        return x;
     }
+    int combine(vector<int>&reps, vector<int>&sizeNodes, int x, int y)
+    {
+        if(x == y)
+        {
+            return 0;
+        }
+        if(sizeNodes[x] < sizeNodes[y])
+        {
+            reps[x] = reps[y];
+            sizeNodes[y]+=sizeNodes[x];
+        }
+        else
+        {
+            reps[y] = reps[x];
+            sizeNodes[x]+=sizeNodes[y];
+        }
+        return 1;
+    }
+
     int countComponents(int n, vector<vector<int>>& edges) {
         
-        vector<vector<int>>adjList(n, vector<int>());
-        int count = 0;
-        for(vector<int>&edge : edges)
-        {
-            int x = edge[0];
-            int y = edge[1];
-            adjList[x].push_back(y);
-            adjList[y].push_back(x);
-        }
-        unordered_set<int>visited;
+        vector<int>reps(n, 0);
+        vector<int>sizeNodes(n, 1);
+        int num_components = n;
+
         for(int i = 0 ; i < n ; i++)
         {
-            if(visited.find(i) == visited.end()){
-                count++;
-                DFS(i, adjList, visited);
-            }
+            reps[i] = i;
         }
-        return count;
+        for(vector<int>&v1 : edges)
+        {
+            int x = findRep(reps, v1[0]);
+            int y = findRep(reps, v1[1]);
+            int val = combine(reps, sizeNodes, x, y);
+            num_components-=val;
+        }
+        return num_components;
     }
 };
