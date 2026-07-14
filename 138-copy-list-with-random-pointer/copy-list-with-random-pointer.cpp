@@ -16,24 +16,21 @@ public:
 
 class Solution {
 public:
+
+    unordered_map<Node*, Node*>clones;
     Node* copyRandomList(Node* head) {
 
-        unordered_map<Node*, Node*>clones;
-        Node* node = head;
-        while(node)
-        {
-            Node* newNode = new Node(node->val);
-            clones[node] = newNode;
-            node = node->next;
+        if(head == NULL){
+            return NULL;
         }
-        node = head;
-        while(node)
+        if(clones.find(head)!=clones.end())
         {
-            Node* newNode = clones[node];
-            newNode->next = node->next? clones[node->next] : NULL;
-            newNode->random = node->random? clones[node->random] : NULL;
-            node = node->next;
+            return clones[head];
         }
-        return clones[head];
-    }
+        Node* newHead = new Node(head->val);
+        clones[head] = newHead;
+        newHead->next = copyRandomList(head->next);
+        newHead->random = copyRandomList(head->random);
+        return newHead;
+    }   
 };
