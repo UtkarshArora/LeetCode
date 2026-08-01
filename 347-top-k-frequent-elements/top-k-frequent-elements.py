@@ -4,7 +4,9 @@ class Solution:
         res = []
         numCount = Counter(nums)
         for (num, freq) in numCount.items():
-            heapq.heappush(heap, (-freq, num))
+            heapq.heappush(heap, (freq, num))
+            if len(heap) > k:
+                heapq.heappop(heap)
         for _ in range(k):
             res.append(heapq.heappop(heap)[1])
         return res
