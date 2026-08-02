@@ -1,17 +1,15 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        ans = [-1,-1]
-        start = 0 
-        end = len(numbers) - 1
-        while(start < end):
-            sum1 = numbers[start] + numbers[end]
-            if sum1 == target:
-                ans = [start+1, end+1]
-                return ans
-            elif sum1 < target:
-                start+=1
-            else:
+        #hashmap store indices -> 2 loops
+        #hashmap store indcies -> 1 loop
+        start, end = 0, len(numbers)-1
+        while start < end:
+            sumNum = numbers[start] + numbers[end]
+            if sumNum == target:
+                return [start+1, end+1]
+            elif sumNum > target:
                 end-=1
-        return ans
-
-        
+            else:
+                start+=1
+        return []
+            
