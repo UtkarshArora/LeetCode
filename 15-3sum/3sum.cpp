@@ -1,41 +1,45 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        
-        // solution 1: run 3 loops
-        vector<vector<int>>finalAns;
-        sort(nums.begin(), nums.end());
+        // 3 indices, x, y and z, but how do we keep track of these indices
+        // n^3 solution is 3 loops
+
+        // n^2 -> fix one index, traverse the remaining part using 2 pointers, by sorting the array
+
         int n = nums.size();
-        for(int i = 0 ; i < n ; i ++)
+        sort(nums.begin(), nums.end());
+        vector<vector<int>>res;
+        for(int i = 0 ; i < n ; i++)
         {
-            if(i > 0 && nums[i] == nums[i-1])
-            {
+            if(i > 0 && nums[i] == nums[i-1]){
                 continue;
             }
-            int start = i + 1, end = n - 1;
+            int num = nums[i];
+            int target = -nums[i];
+            int start = i+1, end = n-1;
             while(start < end)
             {
-                int sum = nums[i] + nums[start] + nums[end];
-                if(sum > 0)
+                int sum = nums[start] + nums[end];
+                if(sum == target)
                 {
-                    end--;
-                }
-                else if(sum < 0)
-                {
+                    res.push_back({nums[i], nums[start], nums[end]});
                     start++;
-                }
-                else if(sum == 0)
-                {
-                finalAns.push_back({nums[i], nums[start], nums[end]});
-                start++;
-                end--;
-                    while(start < end && nums[start] == nums[start-1])
-                    {
+                    while(start < end && nums[start] == nums[start-1]){
                         start++;
                     }
+                    end--;
+                    while(start < end && nums[end] == nums[end+1]){
+                        end--;
+                    }
+                }
+                else if(sum > target){
+                    end--;
+                }
+                else{
+                    start++;
                 }
             }
         }
-        return finalAns;
+        return res;
     }
 };
