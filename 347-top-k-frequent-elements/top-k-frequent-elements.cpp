@@ -9,11 +9,15 @@ public:
         {
             numFreq[num]++;
         }
-        priority_queue<pair<int,int>>pq;
+        priority_queue< pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>>pq;
+
         for(auto p1 : numFreq)
         {
             pair<int,int>p = make_pair(p1.second, p1.first);
             pq.push(p);
+            if(pq.size() > k){
+                pq.pop();
+            }
         }
         int count = 0;
         vector<int>res;
