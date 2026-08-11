@@ -36,7 +36,7 @@ public:
             for(int i = 0 ; i < 26 ; i++)
             {
                 key+= to_string(charMap[i]);
-                key+='#';
+                key+= "#";
             }
             wordMap[key].push_back(word);
         }
