@@ -2,18 +2,22 @@ class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
         
-        unordered_map<string,vector<string>>map1;
-        for(string s : strs)
+        // sort each word, use that as key as hashmap, if key exists -> push into vector, otherwise create a vector with key and the given string
+
+        //Time-> N*klogk, space -> O(N), N -> number of words, k -> average word length
+        
+        unordered_map<string, vector<string>>wordMap;
+        vector<vector<string>>res;
+        for(string word : strs)
         {
-            string s1 = s;
+            string s1 = word;
             sort(s1.begin(), s1.end());
-            map1[s1].push_back(s);
+            wordMap[s1].push_back(word);
+        } 
+
+        for(auto p1 : wordMap){
+            res.push_back(p1.second);
         }
-        vector<vector<string>>ans;
-        for(auto it = map1.begin(); it!=map1.end(); it++)
-        {
-            ans.push_back(it->second);
-        }
-        return ans;
+        return res;
     }
 };
