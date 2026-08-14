@@ -2,23 +2,24 @@ class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
         
-        // sliding window: time complexity : O(n), O(1) space
+        // left-> start of substring, right-> end of substring,
+        // if we find a duplicate, move left to the next index of the duplicate character
 
-        int str_len = s.size();
-        int start = 0, end = 0;
-        unordered_map<char,int>charIndex;
+        // time-> O(n), space -> O(n), n -> length of the string s
+
+        unordered_map<char, int>charIndex; // store last occurrence of char
+        int left = 0, right = 0;
         int maxlen = 0;
-        while(end < str_len)
+        while(right < s.size())
         {
-            if(charIndex.find(s[end])!=charIndex.end())
-            {
-                start = max(charIndex[s[end]]+1, start);
-            }
-            charIndex[s[end]] = end;
-            int len = end - start + 1;
+            if(charIndex.find(s[right])!=charIndex.end()){
+                left = max(charIndex[s[right]]+1, left);
+            }   
+            charIndex[s[right]] = right;
+            int len = right - left + 1;
             maxlen = max(len, maxlen);
-            end++;
-        } 
+            right++;
+        }
         return maxlen;
     }
 };
