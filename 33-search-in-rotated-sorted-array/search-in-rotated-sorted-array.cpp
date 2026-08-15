@@ -44,12 +44,15 @@ public:
         // apply binary search in these ranges [start, index-1] [index, end]
         //[7, 10, 0, 1, 2, 5, 6]
         int index = findMinimum(nums);
-        cout<<index<<endl;
-        // if(nums[index] == target){
-        //     return index;
-        // }
-        int ans1 = binarySearch(nums, 0, index-1, target);
-        int ans2 = binarySearch(nums, index, nums.size()-1, target);
-        return ans1!=-1? ans1 : ans2;
+        auto it1 = lower_bound(nums.begin(), nums.begin() + index, target);
+
+        if(it1!= nums.begin()+index && *it1 == target){
+            return (it1 - nums.begin());
+        }
+        auto it2 = lower_bound(nums.begin() + index, nums.end(), target);
+        if(it2 == nums.end()){
+            return -1;
+        }
+        return (*it2 == target)? (it2 - nums.begin()) : -1;
     }
 };
